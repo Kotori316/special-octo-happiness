@@ -39,10 +39,33 @@
     },
     {
       "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "net.fabricmc:fabric-loader",
+        "net.fabricmc.fabric-api"
+      ],
+      registryUrls: [
+        "https://maven.fabricmc.net/"
+      ]
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "net.neoforged",
+      ],
+      registryUrls: [
+        "https://maven.neoforged.net/releases/"
+      ]
+    },
+    {
+      "matchManagers": [
         "github-actions"
       ],
       "automerge": true
     }
   ],
-  "automergeStrategy": "merge-commit"
+  "automergeStrategy": "merge-commit",
 }
