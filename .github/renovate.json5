@@ -4,6 +4,7 @@
     "config:recommended",
     ":prHourlyLimitNone"
   ],
+  "dependencyDashboard": false,
   "packageRules": [
     {
       "matchManagers": [
