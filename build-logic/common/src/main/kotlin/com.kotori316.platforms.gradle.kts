@@ -1,18 +1,25 @@
+import com.kotori316.plugin.cf.CallVersionCheckFunctionTask
+import com.kotori316.plugin.cf.CallVersionFunctionTask
+
 plugins {
     id("java")
     id("maven-publish")
+    id("com.kotori316.plugin.cf")
 }
 
 val mc: String = project.property("minecraft").toString()
+val releaseDebug: Boolean = (System.getenv("RELEASE_DEBUG") ?: "true").toBoolean()
 
 // configure the maven publication
 publishing {
     publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["java"])
-            artifactId = "test-utility-${project.name}"
-            pom {
-                description = "Test Utility for Minecraft $mc for ${project.name}"
+        if (!releaseDebug) {
+            create<MavenPublication>("mavenJava") {
+                from(components["java"])
+                artifactId = "test-utility-${project.name}"
+                pom {
+                    description = "Test Utility for Minecraft $mc for ${project.name}"
+                }
             }
         }
         create<MavenPublication>("mavenLatest") {
@@ -39,4 +46,21 @@ publishing {
             }
         }
     }
+}
+
+tasks.register("registerVersion", CallVersionFunctionTask::class) {
+    functionEndpoint = CallVersionFunctionTask.readVersionFunctionEndpoint(project)
+    gameVersion = mc
+    platform = project.name
+    modName = "test-utility"
+    changelog = "${project.version} for $mc"
+    homepage = "https://github.com/Kotori316/special-octo-happiness"
+}
+
+tasks.register("checkReleaseVersion", CallVersionCheckFunctionTask::class) {
+    gameVersion = mc
+    platform = project.name
+    modName = "test-utility"
+    version = project.version.toString()
+    failIfExists = !releaseDebug
 }
