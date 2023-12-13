@@ -14,3 +14,14 @@ pluginManagement {
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version ("0.5.0")
 }
+
+include("common")
+if (!System.getenv("DISABLE_FORGE").toBoolean()) {
+    include("forge")
+}
+if (!System.getenv("DISABLE_FABRIC").toBoolean()) {
+    include("fabric")
+}
+if (!System.getenv("DISABLE_NEOFORGE").toBoolean()) {
+    include("neoforge")
+}

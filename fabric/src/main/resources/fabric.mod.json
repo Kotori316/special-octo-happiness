@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "test_utility",
+	"version": "${version}",
+	"name": "Test Utility",
+	"description": "Test utility",
+	"authors": [
+		"MKotori316"
+	],
+	"contact": {
+		"homepage": "https://dev.azure.com/Kotori316/TestUtility-Fabric",
+		"sources": "https://dev.azure.com/Kotori316/_git/TestUtility-Fabric"
+	},
+	"license": "All Rights Reserved",
+	"icon": "assets/test_utility/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.kotori316.test_utility.TestUtility"
+		]
+	},
+	"mixins": [
+		{
+			"config": "test_utility.mixins.json",
+			"environment": "*"
+		},
+		{
+			"config": "test_utility.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": ">=1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}

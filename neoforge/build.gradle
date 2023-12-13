@@ -1,0 +1,122 @@
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+plugins {
+    id("maven-publish")
+    id("signing")
+    id("scala")
+    id("net.neoforged.gradle.userdev") version("7.+")
+    // id("org.parchmentmc.librarian.forgegradle") version("1.+")
+}
+
+version = "20.7.1-SNAPSHOT"
+group = "com.kotori316" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "TestUtility-NeoForge"
+String mod_id = "test_utility_neo"
+
+// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    withSourcesJar()
+}
+
+println "Java: ${System.getProperty "java.version"}, JVM: ${System.getProperty "java.vm.version"} (${System.getProperty "java.vendor"}), Arch: ${System.getProperty "os.arch"}"
+runs {
+    client {
+        workingDirectory.set(project.file("Minecraft"))
+        systemProperties.put("forge.logging.markers", "REGISTRIES")
+        systemProperties.put("mixin.env.remapRefMap", "true")
+        systemProperties.put("mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg")
+        systemProperties.put("mixin.debug.export", "true")
+        systemProperties.put("forge.logging.console.level", "debug")
+        programArguments.addAll('--username', "Kotori")
+
+        modSources.add(project.sourceSets.main)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "Azure-SLP"
+        url = uri("https://pkgs.dev.azure.com/Kotori316/minecraft/_packaging/mods/maven/v1")
+        content {
+            includeModule("org.typelevel", "cats-core_3")
+            includeModule("org.typelevel", "cats-kernel_3")
+            includeVersion("com.kotori316", "test_utility_dependency", "2.0-SNAPSHOT")
+        }
+    }
+}
+
+dependencies {
+    implementation(group: "net.neoforged", name: "neoforge", version: project.neoVersion)
+    implementation(group: "com.kotori316", name: "test_utility_dependency", version: "2.0-SNAPSHOT")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def jarAttributeMap = [
+        "Specification-Title"     : mod_id,
+        "Specification-Vendor"    : "Kotori316",
+        "Specification-Version"   : "1", // We are version 1 of ourselves
+        "Implementation-Title"    : project.name,
+        "Implementation-Version"  : project.jar.archiveVersion,
+        "Implementation-Vendor"   : "Kotori316",
+        "Implementation-Timestamp": ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT),
+        "MixinConfigs"            : "${mod_id}.mixins.json",
+        "Automatic-Module-Name"   : mod_id,
+]
+
+jar {
+    manifest {
+        attributes(jarAttributeMap)
+    }
+}
+
+tasks.register('deobfJar', Jar) {
+    from sourceSets.main.output
+    archiveClassifier.set("deobf")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes(jarAttributeMap)
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "AzureRepository"
+            url = uri("https://pkgs.dev.azure.com/Kotori316/minecraft/_packaging/mods/maven/v1")
+            credentials {
+                username = project.findProperty("azureUserName") ?: System.getenv("AZURE_USER_NAME") ?: ""
+                password = project.findProperty("azureToken") ?: System.getenv("AZURE_TOKEN") ?: "TOKEN"
+            }
+        }
+    }
+    publications {
+        create("mavenJava", MavenPublication.class) {
+            artifactId = mod_id
+            artifact jar
+            artifact deobfJar
+            artifact sourcesJar
+            pom {
+                name = archivesBaseName
+                description = "Test Utility for Minecraft ${project.minecraftVersion} and NeoForge ${project.neoVersion}"
+                url = 'https://dev.azure.com/Kotori316/TestUtility-NeoForge'
+                packaging = "jar"
+            }
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8" // Use the UTF-8 charset for Java compilation
+}
+

@@ -1,0 +1,137 @@
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+plugins {
+    id("maven-publish")
+    id("signing")
+    id("scala")
+    id("net.minecraftforge.gradle") version("[6.0,6.2)")
+    id("org.parchmentmc.librarian.forgegradle") version("1.+")
+    id("org.spongepowered.mixin") version("0.7-SNAPSHOT")
+}
+
+version = "20.6.0-SNAPSHOT"
+group = "com.kotori316" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "TestUtility"
+String mod_id = "test_utility"
+
+// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    withSourcesJar()
+}
+
+println "Java: ${System.getProperty "java.version"}, JVM: ${System.getProperty "java.vm.version"} (${System.getProperty "java.vendor"}), Arch: ${System.getProperty "os.arch"}"
+minecraft {
+    mappings channel: "parchment", version: ((project.parchmentMapping + "-" + minecraftVersion()) as String)
+    runs {
+        client {
+            workingDirectory project.file("Minecraft")
+            property("forge.logging.markers", "REGISTRIES")
+            property("mixin.env.remapRefMap", "true")
+            property("mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg")
+            property("mixin.debug.export", "true")
+            property("forge.logging.console.level", "debug")
+            args '--username', "Kotori"
+
+            mods {
+                create(mod_id) {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "Azure-SLP"
+        url = uri("https://pkgs.dev.azure.com/Kotori316/minecraft/_packaging/mods/maven/v1")
+        content {
+            includeModule("org.typelevel", "cats-core_3")
+            includeModule("org.typelevel", "cats-kernel_3")
+            includeVersion("com.kotori316", "test_utility_dependency", "2.0-SNAPSHOT")
+        }
+    }
+}
+
+String minecraftVersion() {
+    String forge = String.valueOf(project.forgeVersion)
+    return forge.substring(0, forge.indexOf("-"))
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${project.forgeVersion}"
+    implementation(group: "com.kotori316", name: "test_utility_dependency", version: "2.0-SNAPSHOT")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def jarAttributeMap = [
+        "Specification-Title"     : mod_id,
+        "Specification-Vendor"    : "Kotori316",
+        "Specification-Version"   : "1", // We are version 1 of ourselves
+        "Implementation-Title"    : project.name,
+        "Implementation-Version"  : project.jar.archiveVersion,
+        "Implementation-Vendor"   : "Kotori316",
+        "Implementation-Timestamp": ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT),
+        "MixinConfigs"            : "${mod_id}.mixins.json",
+        "Automatic-Module-Name"   : mod_id,
+]
+
+jar {
+    manifest {
+        attributes(jarAttributeMap)
+    }
+}
+
+jar.finalizedBy("reobfJar")
+
+tasks.register('deobfJar', Jar) {
+    from sourceSets.main.output
+    archiveClassifier.set("deobf")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes(jarAttributeMap)
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "AzureRepository"
+            url = uri("https://pkgs.dev.azure.com/Kotori316/minecraft/_packaging/mods/maven/v1")
+            credentials {
+                username = project.findProperty("azureUserName") ?: System.getenv("AZURE_USER_NAME") ?: ""
+                password = project.findProperty("azureToken") ?: System.getenv("AZURE_TOKEN") ?: "TOKEN"
+            }
+        }
+    }
+    publications {
+        create("mavenJava", MavenPublication.class) {
+            artifactId = mod_id
+            artifact jar
+            artifact deobfJar
+            artifact sourcesJar
+            pom {
+                name = archivesBaseName
+                description = "Test Utility for Minecraft ${minecraftVersion()} and Forge ${project.forgeVersion}"
+                url = 'https://dev.azure.com/Kotori316/_git/TestUtility'
+                packaging = "jar"
+            }
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8" // Use the UTF-8 charset for Java compilation
+}
+

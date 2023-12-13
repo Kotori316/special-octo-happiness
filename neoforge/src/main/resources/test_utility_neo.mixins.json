@@ -1,0 +1,10 @@
+{
+  "required": true,
+  "package": "com.kotori316.testutil.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MixinDataGenerator",
+    "MixinGameTestRegistry",
+    "MixinGameTestSequence"
+  ]
+}
