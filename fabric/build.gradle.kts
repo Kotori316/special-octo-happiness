@@ -4,15 +4,7 @@ import org.gradle.jvm.tasks.Jar
 
 plugins {
     id("fabric-loom").version("1.4-SNAPSHOT")
-    id("maven-publish")
-}
-
-version = project.property("mod_version").toString()
-group = project.property("maven_group").toString()
-
-
-base {
-    archivesName.set("${project.property("archives_base_name")}_fabric")
+    id("com.kotori316.common")
 }
 
 repositories {
@@ -31,38 +23,23 @@ loom {
     }
 }
 
+val commonProject = project.findProject(":common")
 dependencies {
     // To change the versions see the gradle.properties file
-    minecraft("com.mojang:minecraft:${project.property("minecraft_version")}")
+    minecraft("com.mojang:minecraft:${project.property("minecraft")}")
     mappings(loom.officialMojangMappings())
-    modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
-
-    // Fabric API. This is technically optional, but you probably want it anyway.
+    modImplementation("net.fabricmc:fabric-loader:${project.property("fabric_loader")}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
 
-    // Uncomment the following line to enable the deprecated Fabric API modules.
-    // These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
-
-    // modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
+    commonProject?.let { compileOnly(it) }
 }
 
 tasks.withType<ProcessResources> {
+    commonProject?.let { from(it.sourceSets.main.get().resources) }
     inputs.property("version", project.version)
     filesMatching("fabric.mod.json") {
         expand(mapOf("version" to project.version))
     }
-}
-
-tasks.withType<JavaCompile>().configureEach {
-    this.options.release.set(17)
-}
-
-java {
-    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-    // if it is present.
-    // If you remove this line, sources will not be generated.
-    withSourcesJar()
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 tasks.withType<Jar> {

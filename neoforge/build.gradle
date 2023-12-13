@@ -7,23 +7,12 @@ buildscript {
     }
 }
 plugins {
-    id("maven-publish")
-    id("signing")
-    id("scala")
+    id("com.kotori316.common")
     id("net.neoforged.gradle.userdev") version("7.+")
     // id("org.parchmentmc.librarian.forgegradle") version("1.+")
 }
 
-version = "20.7.1-SNAPSHOT"
-group = "com.kotori316" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "TestUtility-NeoForge"
 String mod_id = "test_utility_neo"
-
-// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
-java {
-    toolchain.languageVersion = JavaLanguageVersion.of(17)
-    withSourcesJar()
-}
 
 println "Java: ${System.getProperty "java.version"}, JVM: ${System.getProperty "java.vm.version"} (${System.getProperty "java.vendor"}), Arch: ${System.getProperty "os.arch"}"
 runs {
@@ -53,9 +42,22 @@ repositories {
     }
 }
 
+def commonProject = project.findProject(":common")
 dependencies {
-    implementation(group: "net.neoforged", name: "neoforge", version: project.neoVersion)
-    implementation(group: "com.kotori316", name: "test_utility_dependency", version: "2.0-SNAPSHOT")
+    implementation(group: "net.neoforged", name: "neoforge", version: project.property("neo_version").toString())
+
+    if (commonProject != null) {
+        compileOnly(commonProject)
+    }
+}
+
+processResources {
+    from (commonProject.sourceSets.main.resources)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.named("compileJava", JavaCompile).configure {
+    source(commonProject.sourceSets.main.allSource)
 }
 
 test {
@@ -108,15 +110,10 @@ publishing {
             artifact sourcesJar
             pom {
                 name = archivesBaseName
-                description = "Test Utility for Minecraft ${project.minecraftVersion} and NeoForge ${project.neoVersion}"
+                description = "Test Utility for Minecraft ${project.property("minecraft")} and NeoForge ${project.property("neo_version")}"
                 url = 'https://dev.azure.com/Kotori316/TestUtility-NeoForge'
                 packaging = "jar"
             }
         }
     }
 }
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = "UTF-8" // Use the UTF-8 charset for Java compilation
-}
-

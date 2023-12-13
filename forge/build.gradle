@@ -7,31 +7,20 @@ buildscript {
     }
 }
 plugins {
-    id("maven-publish")
-    id("signing")
-    id("scala")
+    id("com.kotori316.common")
     id("net.minecraftforge.gradle") version("[6.0,6.2)")
     id("org.parchmentmc.librarian.forgegradle") version("1.+")
     id("org.spongepowered.mixin") version("0.7-SNAPSHOT")
 }
 
-version = "20.6.0-SNAPSHOT"
-group = "com.kotori316" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "TestUtility"
 String mod_id = "test_utility"
-
-// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
-java {
-    toolchain.languageVersion = JavaLanguageVersion.of(17)
-    withSourcesJar()
-}
 
 println "Java: ${System.getProperty "java.version"}, JVM: ${System.getProperty "java.vm.version"} (${System.getProperty "java.vendor"}), Arch: ${System.getProperty "os.arch"}"
 minecraft {
-    mappings channel: "parchment", version: ((project.parchmentMapping + "-" + minecraftVersion()) as String)
+    mappings (channel: "official", version: project.property("minecraft").toString())
     runs {
-        client {
-            workingDirectory project.file("Minecraft")
+        create("client") {
+            workingDirectory (project.file("Minecraft"))
             property("forge.logging.markers", "REGISTRIES")
             property("mixin.env.remapRefMap", "true")
             property("mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg")
@@ -41,7 +30,7 @@ minecraft {
 
             mods {
                 create(mod_id) {
-                    source sourceSets.main
+                    source (sourceSets.main)
                 }
             }
         }
@@ -61,14 +50,22 @@ repositories {
     }
 }
 
-String minecraftVersion() {
-    String forge = String.valueOf(project.forgeVersion)
-    return forge.substring(0, forge.indexOf("-"))
+def commonProject = project.findProject(":common")
+dependencies {
+    minecraft("net.minecraftforge:forge:${project.property("forge_version")}")
+
+    if (commonProject != null) {
+        compileOnly(commonProject)
+    }
 }
 
-dependencies {
-    minecraft "net.minecraftforge:forge:${project.forgeVersion}"
-    implementation(group: "com.kotori316", name: "test_utility_dependency", version: "2.0-SNAPSHOT")
+processResources {
+    from (commonProject.sourceSets.main.resources)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.withType(JavaCompile).configureEach {
+    source(project(":common").sourceSets.main.allSource)
 }
 
 test {
@@ -123,15 +120,10 @@ publishing {
             artifact sourcesJar
             pom {
                 name = archivesBaseName
-                description = "Test Utility for Minecraft ${minecraftVersion()} and Forge ${project.forgeVersion}"
+                description = "Test Utility for Minecraft ${project.property("minecraft")} and Forge ${project.property("forge_version")}"
                 url = 'https://dev.azure.com/Kotori316/_git/TestUtility'
                 packaging = "jar"
             }
         }
     }
 }
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = "UTF-8" // Use the UTF-8 charset for Java compilation
-}
-

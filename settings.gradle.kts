@@ -15,6 +15,7 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version ("0.5.0")
 }
 
+includeBuild("build-logic")
 include("common")
 if (!System.getenv("DISABLE_FORGE").toBoolean()) {
     include("forge")
