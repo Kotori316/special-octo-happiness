@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("java-library")
 }
 
 base {
@@ -20,8 +21,8 @@ tasks.withType(JavaCompile::class) {
 }
 
 dependencies {
-    implementation(platform("org.junit:junit-bom:${project.property("jupiter")}"))
-    implementation("org.junit.jupiter:junit-jupiter")
-    implementation("org.mockito:mockito-core:${project.property("mockito_core")}")
-    implementation("org.mockito:mockito-inline:${project.property("mockito_inline")}")
+    api(platform("org.junit:junit-bom:${project.property("jupiter")}"))
+    api("org.junit.jupiter:junit-jupiter")
+    api("org.mockito:mockito-core:${project.property("mockito_core")}")
+    api("org.mockito:mockito-inline:${project.property("mockito_inline")}")
 }
