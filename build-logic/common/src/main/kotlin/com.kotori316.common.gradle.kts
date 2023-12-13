@@ -1,7 +1,5 @@
 plugins {
     id("java")
-    id("maven-publish")
-    id("signing")
 }
 
 base {
@@ -19,4 +17,11 @@ java {
 
 tasks.withType(JavaCompile::class) {
     options.encoding = "UTF-8" // Use the UTF-8 charset for Java compilation
+}
+
+dependencies {
+    implementation(platform("org.junit:junit-bom:${project.property("jupiter")}"))
+    implementation("org.junit.jupiter:junit-jupiter")
+    implementation("org.mockito:mockito-core:${project.property("mockito_core")}")
+    implementation("org.mockito:mockito-inline:${project.property("mockito_inline")}")
 }

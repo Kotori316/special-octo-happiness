@@ -5,6 +5,7 @@ import org.gradle.jvm.tasks.Jar
 plugins {
     id("fabric-loom").version("1.4-SNAPSHOT")
     id("com.kotori316.common")
+    id("com.kotori316.platforms")
 }
 
 repositories {

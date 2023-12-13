@@ -8,6 +8,7 @@ buildscript {
 }
 plugins {
     id("com.kotori316.common")
+    id("com.kotori316.platforms")
     id("net.neoforged.gradle.userdev") version("7.+")
     // id("org.parchmentmc.librarian.forgegradle") version("1.+")
 }
