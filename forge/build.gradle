@@ -101,30 +101,3 @@ tasks.register('deobfJar', Jar) {
         attributes(jarAttributeMap)
     }
 }
-
-publishing {
-    repositories {
-        maven {
-            name = "AzureRepository"
-            url = uri("https://pkgs.dev.azure.com/Kotori316/minecraft/_packaging/mods/maven/v1")
-            credentials {
-                username = project.findProperty("azureUserName") ?: System.getenv("AZURE_USER_NAME") ?: ""
-                password = project.findProperty("azureToken") ?: System.getenv("AZURE_TOKEN") ?: "TOKEN"
-            }
-        }
-    }
-    publications {
-        create("mavenJava", MavenPublication.class) {
-            artifactId = mod_id
-            artifact jar
-            artifact deobfJar
-            artifact sourcesJar
-            pom {
-                name = archivesBaseName
-                description = "Test Utility for Minecraft ${project.property("minecraft")} and Forge ${project.property("forge_version")}"
-                url = 'https://dev.azure.com/Kotori316/_git/TestUtility'
-                packaging = "jar"
-            }
-        }
-    }
-}

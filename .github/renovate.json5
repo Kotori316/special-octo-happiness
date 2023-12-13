@@ -29,6 +29,15 @@
     },
     {
       "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "com.mojang:minecraft"
+      ],
+      "enabled": false
+    },
+    {
+      "matchManagers": [
         "github-actions"
       ],
       "automerge": true
