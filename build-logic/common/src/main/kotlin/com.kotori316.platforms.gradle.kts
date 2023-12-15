@@ -53,7 +53,7 @@ tasks.register("registerVersion", CallVersionFunctionTask::class) {
     gameVersion = mc
     platform = project.name
     modName = "test-utility"
-    changelog = "${project.version} for $mc"
+    changelog = "${project.version} for $mc in ${project.name}"
     homepage = "https://github.com/Kotori316/special-octo-happiness"
 }
 
