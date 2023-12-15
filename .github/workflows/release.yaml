@@ -54,7 +54,7 @@ jobs:
           RELEASE_DEBUG: false
       - name: Upload Local Maven
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: special-octo-happiness-Maven-${{ github.run_number }}
           retention-days: 1
