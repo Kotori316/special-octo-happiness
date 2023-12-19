@@ -12,13 +12,7 @@ Test Utility
 '''
 [[dependencies.test_utility]]
 modId = "neoforge"
-mandatory = true
+type = "required"
 versionRange = "[20.2, 21)"
-ordering = "NONE"
-side = "BOTH"
-[[dependencies.test_utility]]
-modId = "minecraft"
-mandatory = true
-versionRange = "[1.20.2, )"
 ordering = "NONE"
 side = "BOTH"
