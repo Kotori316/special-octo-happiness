@@ -41,7 +41,7 @@ jobs:
       - run: chmod +x ./gradlew
       - uses: gradle/gradle-build-action@v2
         with:
-          cache-read-only: false
+          cache-read-only: true
       - uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{secrets.GCP_IDENTITY_PROVIDER}}
