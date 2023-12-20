@@ -1,7 +1,7 @@
 package com.kotori316.testutil;
 
 import com.kotori316.testutil.reporter.ReporterRegister;
-import net.neoforged.bus.EventBus;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.RegisterGameTestsEvent;
 import org.slf4j.Logger;
@@ -13,7 +13,7 @@ public final class TestUtilMod {
     public static final Logger DATA_GENERATOR_LOGGER = LoggerFactory.getLogger("TestUtil/DataGen");
     public static final Logger TEST_LOADER_LOGGER = LoggerFactory.getLogger("TestUtil/TestLoad");
 
-    public TestUtilMod(EventBus modBus) {
+    public TestUtilMod(IEventBus modBus) {
         modBus.addListener(this::changeReporter);
     }
 
