@@ -7,6 +7,7 @@
     "MixinDataGenerator",
     "MixinForgeGameTestHooks",
     "MixinGameTestRegistry",
-    "MixinGameTestSequence"
+    "MixinGameTestSequence",
+    "MixinStructureTemplateManager"
   ]
 }
