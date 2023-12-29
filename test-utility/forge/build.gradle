@@ -51,7 +51,7 @@ repositories {
     }
 }
 
-def commonProject = project.findProject(":common")
+def commonProject = project.findProject(":test-utility:common")
 dependencies {
     minecraft("net.minecraftforge:forge:${project.property("forge_version")}")
 
@@ -66,7 +66,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    source(project(":common").sourceSets.main.allSource)
+    source(project(":test-utility:common").sourceSets.main.allSource)
 }
 
 test {

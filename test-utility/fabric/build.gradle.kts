@@ -24,7 +24,7 @@ loom {
     }
 }
 
-val commonProject = project.findProject(":common")
+val commonProject = project.findProject(":test-utility:common")
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft("com.mojang:minecraft:${project.property("minecraft")}")

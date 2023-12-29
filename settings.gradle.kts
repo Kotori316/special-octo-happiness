@@ -16,13 +16,13 @@ plugins {
 }
 
 includeBuild("build-logic")
-include("common")
+include(":test-utility:common")
 if (!System.getenv("DISABLE_FORGE").toBoolean()) {
-    include("forge")
+    include(":test-utility:forge")
 }
 if (!System.getenv("DISABLE_FABRIC").toBoolean()) {
-    include("fabric")
+    include(":test-utility:fabric")
 }
 if (!System.getenv("DISABLE_NEOFORGE").toBoolean()) {
-    include("neoforge")
+    include(":test-utility:neoforge")
 }
