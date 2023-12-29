@@ -4,8 +4,8 @@ import org.gradle.jvm.tasks.Jar
 
 plugins {
     id("fabric-loom").version("1.4.5")
-    id("com.kotori316.common")
-    id("com.kotori316.platforms")
+    id("com.kotori316.tu.common")
+    id("com.kotori316.tu.platforms")
 }
 
 repositories {

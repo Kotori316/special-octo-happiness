@@ -5,7 +5,7 @@ plugins {
 
 base {
     group = "com.kotori316"
-    archivesName = "${project.property("archives_base_name")}-${project.name}"
+    archivesName = "${project.property("tu_archives_base_name")}-${project.name}"
     version = project.property("version")!!
 }
 
