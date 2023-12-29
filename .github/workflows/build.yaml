@@ -21,7 +21,7 @@ jobs:
         with:
           cache-read-only: ${{github.event_name != 'push'}}
           gradle-home-cache-cleanup: true
-      - run: ./gradlew checkReleaseVersion build
+      - run: ./gradlew checkReleaseVersion build --scan
 
   publish:
     runs-on: ubuntu-latest
