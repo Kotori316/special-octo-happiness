@@ -8,34 +8,33 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLLoader;
 
 @Mod(DebugUtils.MOD_ID)
 public class DebugUtilsForge {
 
     public DebugUtilsForge() {
         var modBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modBus.addListener(this::clientInit);
+        if (FMLLoader.getDist().isClient()) {
+            modBus.addListener(this::loadComplete);
+        }
         var forgeBus = MinecraftForge.EVENT_BUS;
         forgeBus.addListener(this::registerCommand);
         forgeBus.addListener(this::serverLoggedIn);
-    }
-
-     void clientInit(FMLClientSetupEvent event) {
-        MinecraftForge.EVENT_BUS.addListener(this::clientLoggedIn);
     }
 
     void registerCommand(RegisterCommandsEvent event) {
         CommandRegister.registerAll(event.getDispatcher(), event.getBuildContext());
     }
 
-    void serverLoggedIn(PlayerEvent.PlayerLoggedInEvent event){
+    void serverLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         var player = event.getEntity();
         ServerSetting.onLogin(player, player.level());
     }
 
-    void clientLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+    void loadComplete(FMLLoadCompleteEvent event) {
         ClientSetting.onLogin();
     }
 }

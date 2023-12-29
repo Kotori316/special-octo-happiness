@@ -15,6 +15,7 @@ public class ClientSetting {
             settings.entityShadows().set(false);
             settings.attackIndicator().set(AttackIndicatorStatus.HOTBAR);
             settings.cloudStatus().set(CloudStatus.OFF);
+            settings.operatorItemsTab().set(true);
 
             settings.pauseOnLostFocus = false;
             settings.advancedItemTooltips = true;
@@ -23,6 +24,7 @@ public class ClientSetting {
 
             settings.getSoundSourceOptionInstance(SoundSource.MASTER).set(0.25);
             settings.getSoundSourceOptionInstance(SoundSource.MUSIC).set(0.125);
+            settings.getSoundSourceOptionInstance(SoundSource.VOICE).set(0.125);
         }
     }
 }
