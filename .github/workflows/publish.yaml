@@ -9,6 +9,9 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      id-token: write
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: gradle/wrapper-validation-action@v1
