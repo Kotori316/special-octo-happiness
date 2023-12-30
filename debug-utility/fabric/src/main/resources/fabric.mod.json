@@ -12,7 +12,7 @@
 		"sources": "https://github.com/Kotori316/special-octo-happiness"
 	},
 	"license": "All Rights Reserved",
-	"icon": "assets/debug_utility/icon.png",
+	"icon": "assets/debug_utility/du.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
