@@ -70,6 +70,9 @@ jobs:
           CLOUDFLARE_S3_ENDPOINT: ${{steps.get-secrets.outputs.cloudflare_s3_endpoint}}
           R2_ACCESS_KEY: ${{steps.get-secrets.outputs.cloudflare_access_key}}
           R2_SECRET_KEY: ${{steps.get-secrets.outputs.cloudflare_secret_key}}
+          KEY_PASSWORD: ${{steps.get-secrets.outputs.key_password}}
+          KEY_ID: ${{steps.get-secrets.outputs.key_id}}
+          JAR_PASSWORD: ${{steps.get-secrets.outputs.jar_password}}
           RELEASE_DEBUG: ${{ inputs.RELEASE_DEBUG }}
       - name: Upload Local Maven
         if: always() && inputs.RELEASE_DEBUG
