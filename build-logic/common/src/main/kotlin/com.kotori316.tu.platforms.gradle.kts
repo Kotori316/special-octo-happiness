@@ -5,6 +5,7 @@ plugins {
     id("java")
     id("maven-publish")
     id("com.kotori316.plugin.cf")
+    id("com.kotori316.common.signing")
 }
 
 val mc: String = project.property("minecraft").toString()
