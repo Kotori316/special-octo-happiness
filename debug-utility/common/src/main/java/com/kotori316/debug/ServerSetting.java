@@ -17,9 +17,13 @@ import java.util.stream.Stream;
 
 public class ServerSetting {
     public static void onLogin(Player player, Level level) {
+        onLogin(player, level, false);
+    }
+
+    public static void onLogin(Player player, Level level, boolean force) {
         var server = level.getServer();
         var gameRule = level.getGameRules();
-        if (!gameRule.getBoolean(GameRules.RULE_DAYLIGHT)) return;
+        if (!force && !gameRule.getBoolean(GameRules.RULE_DAYLIGHT)) return;
 
         gameRule.getRule(GameRules.RULE_DAYLIGHT).set(false, server);
         gameRule.getRule(GameRules.RULE_WEATHER_CYCLE).set(false, server);
@@ -47,5 +51,7 @@ public class ServerSetting {
         if (!player.getInventory().contains(potionStack)) {
             player.addItem(potionStack);
         }
+
+        DebugUtils.LOGGER.info("Set ServerSetting from {}, force={}", DebugUtils.MOD_ID, force);
     }
 }

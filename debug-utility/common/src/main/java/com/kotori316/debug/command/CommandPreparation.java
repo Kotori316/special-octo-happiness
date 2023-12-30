@@ -15,7 +15,7 @@ public class CommandPreparation {
                 .executes(c -> {
                     if (c.getSource().getEntity() instanceof ServerPlayer player) {
                         var level = c.getSource().getLevel();
-                        ServerSetting.onLogin(player, level);
+                        ServerSetting.onLogin(player, level, true);
                     }
                     return Command.SINGLE_SUCCESS;
                 });
