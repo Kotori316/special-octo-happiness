@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     mapOf(
-        "com.kotori316.plugin.cf" to "1.7",
+        "com.kotori316.plugin.cf" to libs.versions.gradle.cf.get(),
     ).forEach { (name, version) ->
         implementation(group = name, name = "${name}.gradle.plugin", version = version)
     }

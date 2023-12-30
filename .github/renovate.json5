@@ -62,6 +62,18 @@
     },
     {
       "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "com.kotori316.plugin"
+      ],
+      registryUrls: [
+        "https://maven.kotori316.com/"
+      ],
+      "automerge": true
+    },
+    {
+      "matchManagers": [
         "github-actions"
       ],
       "automerge": true
