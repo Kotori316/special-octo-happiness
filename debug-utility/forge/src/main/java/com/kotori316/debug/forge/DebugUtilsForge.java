@@ -4,6 +4,7 @@ import com.kotori316.debug.ClientSetting;
 import com.kotori316.debug.DebugUtils;
 import com.kotori316.debug.ServerSetting;
 import com.kotori316.debug.command.CommandRegister;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -31,7 +32,8 @@ public class DebugUtilsForge {
 
     void serverLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         var player = event.getEntity();
-        ServerSetting.onLogin(player, player.level());
+        Level level = player.level();
+        ServerSetting.onLogin(player, level, false);
     }
 
     void loadComplete(FMLLoadCompleteEvent event) {

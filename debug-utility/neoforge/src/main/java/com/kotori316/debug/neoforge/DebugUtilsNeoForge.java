@@ -4,6 +4,7 @@ import com.kotori316.debug.ClientSetting;
 import com.kotori316.debug.DebugUtils;
 import com.kotori316.debug.ServerSetting;
 import com.kotori316.debug.command.CommandRegister;
+import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -30,7 +31,8 @@ public class DebugUtilsNeoForge {
 
     void serverLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         var player = event.getEntity();
-        ServerSetting.onLogin(player, player.level());
+        Level level = player.level();
+        ServerSetting.onLogin(player, level, false);
     }
 
     void loadComplete(FMLLoadCompleteEvent event) {
