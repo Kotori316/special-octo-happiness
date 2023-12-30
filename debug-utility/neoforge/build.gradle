@@ -17,7 +17,7 @@ String mod_id = "debug_utility_neo"
 
 println "Java: ${System.getProperty "java.version"}, JVM: ${System.getProperty "java.vm.version"} (${System.getProperty "java.vendor"}), Arch: ${System.getProperty "os.arch"}"
 runs {
-    /*create("du-client") {
+    create("client") {
         workingDirectory.set(project.file("Minecraft"))
         systemProperties.put("forge.logging.markers", "REGISTRIES")
         systemProperties.put("mixin.env.remapRefMap", "true")
@@ -27,7 +27,7 @@ runs {
         programArguments.addAll('--username', "Kotori")
 
         modSources.add(project.sourceSets.main)
-    }*/
+    }
 }
 
 repositories {
