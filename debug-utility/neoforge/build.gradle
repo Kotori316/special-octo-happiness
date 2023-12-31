@@ -72,7 +72,7 @@ def jarAttributeMap = [
         "Implementation-Version"  : project.jar.archiveVersion,
         "Implementation-Vendor"   : "Kotori316",
         "Implementation-Timestamp": ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT),
-        "MixinConfigs"            : "${mod_id}.mixins.json",
+        // "MixinConfigs"            : "${mod_id}.mixins.json",
         "Automatic-Module-Name"   : mod_id,
 ]
 
