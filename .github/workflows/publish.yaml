@@ -75,7 +75,7 @@ jobs:
           JAR_PASSWORD: ${{steps.get-secrets.outputs.jar_password}}
           RELEASE_DEBUG: ${{ inputs.RELEASE_DEBUG }}
       - name: Upload Local Maven
-        if: always() && inputs.RELEASE_DEBUG
+        if: always() && !inputs.RELEASE_DEBUG
         uses: actions/upload-artifact@v4
         with:
           name: special-octo-happiness-Maven-${{ github.run_number }}

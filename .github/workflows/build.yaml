@@ -23,7 +23,7 @@ jobs:
           gradle-home-cache-cleanup: true
       - run: ./gradlew checkReleaseVersion build --scan
 
-  publish:
+  release-snapshot:
     needs: ['build']
     if: github.event_name == 'push'
     permissions:
