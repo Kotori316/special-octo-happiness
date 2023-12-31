@@ -11,6 +11,8 @@ plugins {
 val mc: String = project.property("minecraft").toString()
 val releaseDebug: Boolean = (System.getenv("RELEASE_DEBUG") ?: "true").toBoolean()
 
+val generalDescription = "Test Utility(${project.version}) for Minecraft $mc with ${project.name}"
+
 // configure the maven publication
 publishing {
     publications {
@@ -19,7 +21,7 @@ publishing {
                 from(components["java"])
                 artifactId = "test-utility-${project.name}"
                 pom {
-                    description = "Test Utility for Minecraft $mc for ${project.name}"
+                    description = generalDescription
                 }
             }
         }
@@ -28,7 +30,7 @@ publishing {
             artifactId = "test-utility-${project.name}"
             version = project.property("maven_latest").toString()
             pom {
-                description = "Test Utility for Minecraft $mc for ${project.name}"
+                description = generalDescription
             }
         }
     }
@@ -54,7 +56,7 @@ tasks.register("registerVersion", CallVersionFunctionTask::class) {
     gameVersion = mc
     platform = project.name
     modName = "test-utility"
-    changelog = "${project.version} for $mc in ${project.name}"
+    changelog = generalDescription
     homepage = "https://github.com/Kotori316/special-octo-happiness"
 }
 
