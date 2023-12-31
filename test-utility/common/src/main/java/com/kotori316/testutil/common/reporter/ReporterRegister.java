@@ -1,4 +1,4 @@
-package com.kotori316.testutil.reporter;
+package com.kotori316.testutil.common.reporter;
 
 import net.minecraft.gametest.framework.GlobalTestReporter;
 import net.minecraft.gametest.framework.LogTestReporter;

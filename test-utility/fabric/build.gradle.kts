@@ -48,3 +48,11 @@ tasks.withType<Jar> {
         rename { "${it}_${project.base.archivesName}" }
     }
 }
+
+tasks.withType<JavaCompile> {
+    commonProject?.let { source(it.sourceSets.main.get().allSource) }
+}
+
+tasks.named("compileJava", JavaCompile::class) {
+    dependsOn("processResources")
+}

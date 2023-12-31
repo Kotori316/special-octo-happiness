@@ -1,6 +1,6 @@
 package com.kotori316.testutil.mixin;
 
-import com.kotori316.testutil.GameTestUtil;
+import com.kotori316.testutil.common.TestUtilityCommon;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.GameTestRegistry;
 import net.minecraft.gametest.framework.TestFunction;
@@ -78,7 +78,7 @@ public final class MixinGameTestRegistry {
             var tests = (Collection<TestFunction>) method.invoke(instance);
             for (Object test : tests) {
                 // Log test name to check registered tests.
-                GameTestUtil.logTestName(test, method);
+                TestUtilityCommon.logTestName(test, method);
             }
             return tests;
         } catch (ReflectiveOperationException e) {
@@ -88,6 +88,6 @@ public final class MixinGameTestRegistry {
 
     @Inject(method = "turnMethodIntoTestFunction", at = @At("RETURN"))
     private static void logTestFunctionNameWithMethod(Method pTestMethod, CallbackInfoReturnable<TestFunction> cir) {
-        GameTestUtil.logTestName(cir.getReturnValue(), pTestMethod);
+        TestUtilityCommon.logTestName(cir.getReturnValue(), pTestMethod);
     }
 }

@@ -119,12 +119,4 @@ public final class GameTestUtil {
         var absolutePos = helper.absolutePos(relativePos);
         throw new GameTestAssertPosException(message, absolutePos, relativePos, helper.getTick());
     }
-
-
-    public static void logTestName(Object maybeTest, Method createFrom) {
-        if (maybeTest instanceof TestFunction testFunction) {
-            TestUtilMod.TEST_LOADER_LOGGER.info("Register {}(batch: {}, structure: {}) from {}",
-                testFunction.getTestName(), testFunction.getBatchName(), testFunction.getStructureName(), createFrom);
-        }
-    }
 }
