@@ -14,5 +14,6 @@ public final class TestUtilMod {
 
     void changeReporter(RegisterGameTestsEvent event) {
         ReporterRegister.changeReporter();
+        TestUtilityCommon.GENERAL.info("Inject CreateFileReporter by {}", TestUtilityCommon.MOD_ID);
     }
 }
