@@ -1,4 +1,4 @@
-package com.kotori316.test_utility.mixin;
+package com.kotori316.testutil.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;

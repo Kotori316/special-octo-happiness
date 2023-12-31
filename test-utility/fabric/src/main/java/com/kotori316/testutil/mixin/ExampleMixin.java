@@ -1,4 +1,4 @@
-package com.kotori316.test_utility.mixin;
+package com.kotori316.testutil.mixin;
 
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;

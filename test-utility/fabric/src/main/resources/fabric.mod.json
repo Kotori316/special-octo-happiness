@@ -16,7 +16,7 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.kotori316.test_utility.TestUtility"
+			"com.kotori316.testutil.TestUtility"
 		]
 	},
 	"mixins": [
