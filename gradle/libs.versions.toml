@@ -1,5 +1,5 @@
 [versions]
-gradle_cf = "2.2"
+gradle_cf = "2.3"
 
 [plugins]
 cf = { id = "com.kotori316.plugin.cf", version.ref = "gradle_cf" }
