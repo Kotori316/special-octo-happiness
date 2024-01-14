@@ -18,10 +18,10 @@ String mod_id = "test_utility"
 
 println "Java: ${System.getProperty "java.version"}, JVM: ${System.getProperty "java.vm.version"} (${System.getProperty "java.vendor"}), Arch: ${System.getProperty "os.arch"}"
 minecraft {
-    mappings (channel: "official", version: project.property("minecraft").toString())
+    mappings(channel: "parchment", version: "${project.property("parchment_minecraft")}-${project.property("parchment_mapping")}-${project.property("minecraft")}")
     runs {
         create("client") {
-            workingDirectory (project.file("Minecraft"))
+            workingDirectory(project.file("Minecraft"))
             property("forge.logging.markers", "REGISTRIES")
             property("mixin.env.remapRefMap", "true")
             property("mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg")
@@ -31,7 +31,7 @@ minecraft {
 
             mods {
                 create(mod_id) {
-                    source (sourceSets.main)
+                    source(sourceSets.main)
                 }
             }
         }
@@ -61,7 +61,7 @@ dependencies {
 }
 
 processResources {
-    from (commonProject.sourceSets.main.resources)
+    from(commonProject.sourceSets.main.resources)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 

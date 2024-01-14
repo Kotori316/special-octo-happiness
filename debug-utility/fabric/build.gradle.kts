@@ -28,7 +28,10 @@ val commonProject = project.findProject(":debug-utility:common")
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft("com.mojang:minecraft:${project.property("minecraft")}")
-    mappings(loom.officialMojangMappings())
+    mappings(loom.layered {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-${project.property("parchment_minecraft")}:${project.property("parchment_mapping")}@zip")
+    })
     modImplementation("net.fabricmc:fabric-loader:${project.property("fabric_loader")}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
 

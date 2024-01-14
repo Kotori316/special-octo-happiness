@@ -20,6 +20,10 @@ tasks.withType(JavaCompile::class) {
     options.encoding = "UTF-8" // Use the UTF-8 charset for Java compilation
 }
 
+repositories {
+    maven { url = uri("https://maven.parchmentmc.org") }
+}
+
 dependencies {
     api(platform("org.junit:junit-bom:${project.property("jupiter")}"))
     api("org.junit.jupiter:junit-jupiter")
