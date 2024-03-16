@@ -28,7 +28,7 @@ gradleEnterprise {
 includeBuild("build-logic")
 include(":test-utility:common")
 include(":debug-utility:common")
-if (!System.getenv("DISABLE_FORGE").toBoolean()) {
+if (false && !System.getenv("DISABLE_FORGE").toBoolean()) {
     include(":test-utility:forge")
     include(":debug-utility:forge")
 }
@@ -36,7 +36,7 @@ if (!System.getenv("DISABLE_FABRIC").toBoolean()) {
     include(":test-utility:fabric")
     include(":debug-utility:fabric")
 }
-if (!System.getenv("DISABLE_NEOFORGE").toBoolean()) {
+if (false && !System.getenv("DISABLE_NEOFORGE").toBoolean()) {
     include(":test-utility:neoforge")
     include(":debug-utility:neoforge")
 }
