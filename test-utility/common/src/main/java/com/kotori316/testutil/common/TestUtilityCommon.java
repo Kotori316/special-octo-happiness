@@ -19,7 +19,7 @@ public class TestUtilityCommon {
         if (Boolean.parseBoolean(System.getenv("TEST_UTILITY_LOG_ALL_TEST"))) {
             if (maybeTest instanceof TestFunction testFunction) {
                 TEST_LOADER_LOGGER.info("Register {}(batch: {}, structure: {}) from {}",
-                    testFunction.getTestName(), testFunction.getBatchName(), testFunction.getStructureName(), createFrom);
+                    testFunction.testName(), testFunction.batchName(), testFunction.structureName(), createFrom);
             }
         }
     }
