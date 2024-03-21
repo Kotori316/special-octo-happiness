@@ -3,7 +3,7 @@
 import org.gradle.jvm.tasks.Jar
 
 plugins {
-    id("fabric-loom").version("1.6.2")
+    id("fabric-loom").version("1.6.3")
     id("com.kotori316.tu.common")
     id("com.kotori316.tu.platforms")
 }
