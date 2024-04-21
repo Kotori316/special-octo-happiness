@@ -39,7 +39,7 @@ if (!System.getenv("DISABLE_FABRIC").toBoolean()) {
     include(":test-utility:fabric")
     include(":debug-utility:fabric")
 }
-if (false && !System.getenv("DISABLE_NEOFORGE").toBoolean()) {
+if (!System.getenv("DISABLE_NEOFORGE").toBoolean()) {
     include(":test-utility:neoforge")
     include(":debug-utility:neoforge")
 }
