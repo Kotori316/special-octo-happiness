@@ -35,7 +35,7 @@ class MCTestInitializerTest {
     class NeoForgeTest {
         @Test
         void accessIngredientType() {
-            assertNotNull(assertDoesNotThrow(NeoForgeMod.VANILLA_INGREDIENT_TYPE::get));
+            assertNotNull(assertDoesNotThrow(NeoForgeMod.COMPOUND_INGREDIENT_TYPE::get));
         }
 
         @Test
