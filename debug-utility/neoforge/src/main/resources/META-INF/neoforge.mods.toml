@@ -11,6 +11,6 @@ description = ''' '''
 [[dependencies.debug_utils]]
 modId = "neoforge"
 type = "required"
-versionRange = "[20.2, 21)"
+versionRange = "[20.5, 21)"
 ordering = "NONE"
 side = "BOTH"

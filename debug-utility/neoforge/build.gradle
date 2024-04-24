@@ -50,9 +50,6 @@ repositories {
 }
 
 repositories {
-    maven {
-        url = uri("https://prmaven.neoforged.net/NeoForge/pr794")
-    }
 }
 
 def commonProject = project.findProject(":debug-utility:common")
