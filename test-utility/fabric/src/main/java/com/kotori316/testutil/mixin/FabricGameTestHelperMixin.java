@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @SuppressWarnings("UnstableApiUsage")
 @Mixin(FabricGameTestHelper.class)
 public class FabricGameTestHelperMixin {
-    @Inject(method = "runHeadlessServer", at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;info(Ljava/lang/String;)V", shift = At.Shift.BEFORE))
+    @Inject(method = "runHeadlessServer", at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;info(Ljava/lang/String;)V", shift = At.Shift.BEFORE, remap = false))
     private static void changeGlobalTestReporter(LevelStorageSource.LevelStorageAccess session, PackRepository resourcePackManager, CallbackInfo ci) {
         ReporterRegister.changeReporter();
         TestUtilityCommon.GENERAL.info("Inject CreateFileReporter by {}", TestUtilityCommon.MOD_ID);

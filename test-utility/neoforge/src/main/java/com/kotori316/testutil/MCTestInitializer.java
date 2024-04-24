@@ -4,12 +4,13 @@ import net.minecraft.SharedConstants;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.locale.Language;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.Bootstrap;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraftforge.fml.unsafe.UnsafeHacks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -37,7 +38,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.platform.commons.function.Try;
 import org.junit.platform.commons.support.ReflectionSupport;
 
-import java.io.InputStream;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -218,7 +219,7 @@ public final class MCTestInitializer implements BeforeAllCallback {
             .descriptionId("block.minecraft.lava")
             .canSwim(false)
             .canDrown(false)
-            .pathType(BlockPathTypes.LAVA)
+            .pathType(PathType.LAVA)
             .adjacentPathType(null)
             .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
             .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
@@ -236,10 +237,23 @@ public final class MCTestInitializer implements BeforeAllCallback {
         }
     }
 
+    @SuppressWarnings({"UnstableApiUsage", "unchecked"})
     private static void setLanguage(String modId) {
-        LanguageHook.loadForgeAndMCLangs();
-        Try.call(() -> LanguageHook.class.getDeclaredMethod("loadLocaleData", InputStream.class))
-            .andThenTry(m -> ReflectionSupport.invokeMethod(m, null, MCTestInitializer.class.getResourceAsStream("/assets/%s/lang/en_us.json".formatted(modId))));
+        LanguageHook.loadBuiltinLanguages();
+        try (var langStream = MCTestInitializer.class.getResourceAsStream("/assets/%s/lang/en_us.json".formatted(modId))) {
+            if (langStream == null) {
+                System.out.println("(MCTestInitializer#setLanguage) The lang file is null");
+                return;
+            }
+            Try.call(() -> LanguageHook.class.getDeclaredField("modTable"))
+                .andThenTry(f -> {
+                    f.setAccessible(true);
+                    return (Map<String, String>) f.get(null);
+                })
+                .ifSuccess(tables -> Language.loadFromJson(langStream, tables::put));
+        } catch (IOException e) {
+            fail(e);
+        }
     }
 
     private static List<? extends DeferredRegister<?>> getDeferredRegisters(Class<?> declaredClass) {

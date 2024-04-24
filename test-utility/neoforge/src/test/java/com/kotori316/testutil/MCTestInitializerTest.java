@@ -1,13 +1,12 @@
 package com.kotori316.testutil;
 
 import com.mojang.serialization.JsonOps;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.common.crafting.NBTIngredient;
+import net.neoforged.neoforge.common.crafting.CompoundIngredient;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,12 +35,12 @@ class MCTestInitializerTest {
     class NeoForgeTest {
         @Test
         void accessIngredientType() {
-            assertNotNull(assertDoesNotThrow(NeoForgeMod.VANILLA_INGREDIENT_TYPE::get));
+            assertNotNull(assertDoesNotThrow(NeoForgeMod.COMPOUND_INGREDIENT_TYPE::get));
         }
 
         @Test
         void serializeCustomIngredient() {
-            assertNotNull(assertDoesNotThrow(() -> Ingredient.CODEC.encodeStart(JsonOps.INSTANCE, NBTIngredient.of(false, new ItemStack(Items.APPLE)))));
+            assertNotNull(assertDoesNotThrow(() -> Ingredient.CODEC.encodeStart(JsonOps.INSTANCE, CompoundIngredient.of(Ingredient.of(Items.APPLE), Ingredient.of(Items.NAME_TAG)))));
         }
     }
 }

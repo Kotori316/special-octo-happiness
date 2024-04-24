@@ -1,5 +1,6 @@
 package com.kotori316.debug;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -7,13 +8,12 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 public class ServerSetting {
@@ -40,8 +40,10 @@ public class ServerSetting {
                     "Seed = %s".formatted(server.overworld().getSeed())
                 ).map(Component::literal)
                 .forEach(m -> player.displayClientMessage(m, false));
-            var potionStack = PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), Potions.LONG_NIGHT_VISION);
-            PotionUtils.setCustomEffects(potionStack, List.of(new MobEffectInstance(MobEffects.WATER_BREATHING, 20 * 60 * 8)));
+            var potionStack = new ItemStack(Items.SPLASH_POTION);
+            potionStack.set(DataComponents.POTION_CONTENTS,
+                new PotionContents(Potions.LONG_NIGHT_VISION).withEffectAdded(new MobEffectInstance(MobEffects.WATER_BREATHING, 20 * 60 * 8))
+            );
             if (!player.getInventory().contains(potionStack)) {
                 player.addItem(potionStack);
             }

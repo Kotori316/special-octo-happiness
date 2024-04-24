@@ -49,6 +49,9 @@ repositories {
     }
 }
 
+repositories {
+}
+
 def commonProject = project.findProject(":debug-utility:common")
 dependencies {
     implementation(group: "net.neoforged", name: "neoforge", version: project.property("neo_version").toString())
