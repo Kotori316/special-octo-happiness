@@ -118,7 +118,7 @@ public final class MCTestInitializer implements BeforeAllCallback {
             Field handler = FMLLoader.class.getDeclaredField("commonLaunchHandler");
             handler.setAccessible(true);
             Constructor<?> launchHandlerConstructor =
-                Class.forName("net.neoforged.fml.loading.targets.FMLDataUserdevLaunchHandler")
+                Class.forName("net.neoforged.fml.loading.targets.NeoForgeDataUserdevLaunchHandler")
                     .getConstructor();
             launchHandlerConstructor.setAccessible(true);
             handler.set(null, launchHandlerConstructor.newInstance());
