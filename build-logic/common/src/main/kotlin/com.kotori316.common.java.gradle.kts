@@ -21,4 +21,5 @@ tasks.test {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:${project.property("jupiter")}"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

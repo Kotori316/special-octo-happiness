@@ -31,7 +31,7 @@ develocity {
 includeBuild("build-logic")
 include(":test-utility:common")
 include(":debug-utility:common")
-if (false && !System.getenv("DISABLE_FORGE").toBoolean()) {
+if (!System.getenv("DISABLE_FORGE").toBoolean()) {
     include(":test-utility:forge")
     include(":debug-utility:forge")
 }
