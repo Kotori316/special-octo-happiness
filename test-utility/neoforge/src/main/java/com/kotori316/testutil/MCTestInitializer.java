@@ -27,6 +27,7 @@ import net.neoforged.neoforge.server.LanguageHook;
 import net.neoforged.neoforgespi.language.IConfigurable;
 import net.neoforged.neoforgespi.language.IModFileInfo;
 import net.neoforged.neoforgespi.language.IModInfo;
+import net.neoforged.neoforgespi.language.IModLanguageLoader;
 import net.neoforged.neoforgespi.locating.ForgeFeature;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
@@ -364,12 +365,7 @@ public final class MCTestInitializer implements BeforeAllCallback {
         }
 
         @Override
-        public boolean matches(Object mod) {
-            return mod == getMod();
-        }
-
-        @Override
-        public Object getMod() {
+        public String toString() {
             return name + " Test";
         }
 
@@ -389,6 +385,11 @@ public final class MCTestInitializer implements BeforeAllCallback {
 
         @Override
         public IModFileInfo getOwningFile() {
+            return null;
+        }
+
+        @Override
+        public IModLanguageLoader getLoader() {
             return null;
         }
 
