@@ -76,8 +76,8 @@ public final class MCTestInitializer implements BeforeAllCallback {
     public static synchronized void setUp(String modId, Runnable additional, Consumer<RegisterEvent> modResourceRegister, Consumer<RegisterCapabilitiesEvent> modCapabilityRegister) {
         if (!INITIALIZED.getAndSet(true)) {
             resolveInfoCmpError();
-            SharedConstants.tryDetectVersion();
             changeDist();
+            SharedConstants.tryDetectVersion();
             setHandler();
             Bootstrap.bootStrap();
             unfreezeGameData();

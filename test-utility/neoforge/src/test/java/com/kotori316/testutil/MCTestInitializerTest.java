@@ -4,6 +4,8 @@ import com.mojang.serialization.JsonOps;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.crafting.CompoundIngredient;
@@ -41,6 +43,15 @@ class MCTestInitializerTest {
         @Test
         void serializeCustomIngredient() {
             assertNotNull(assertDoesNotThrow(() -> Ingredient.CODEC.encodeStart(JsonOps.INSTANCE, CompoundIngredient.of(Ingredient.of(Items.APPLE), Ingredient.of(Items.NAME_TAG)))));
+        }
+
+        @Test
+        void accessDist() {
+            assertNotNull(assertDoesNotThrow(NeoForgeTest::getDist));
+        }
+
+        private static Dist getDist() {
+            return FMLEnvironment.dist;
         }
     }
 }
