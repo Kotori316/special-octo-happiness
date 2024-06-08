@@ -17,6 +17,7 @@ jobs:
         project:
           - TU
           - DU
+      fail-fast: false
     env:
       DISABLE_DU: ${{ matrix.project != 'DU' }}
       DISABLE_TU: ${{ matrix.project != 'TU' }}
