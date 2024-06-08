@@ -54,8 +54,10 @@ if (!System.getenv("DISABLE_FABRIC").toBoolean()) {
 if (!System.getenv("DISABLE_NEOFORGE").toBoolean()) {
     if (!System.getenv("DISABLE_TU").toBoolean()) {
         include(":test-utility:neoforge")
+        project(":test-utility:neoforge").name = "neoforge-tu"
     }
     if (!System.getenv("DISABLE_DU").toBoolean()) {
         include(":debug-utility:neoforge")
+        project(":debug-utility:neoforge").name = "neoforge-du"
     }
 }

@@ -1,12 +1,10 @@
 package com.kotori316.testutil;
 
-import net.minecraft.SharedConstants;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.locale.Language;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.Bootstrap;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
@@ -15,7 +13,6 @@ import net.minecraftforge.fml.unsafe.UnsafeHacks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.capabilities.CapabilityHooks;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -76,11 +73,12 @@ public final class MCTestInitializer implements BeforeAllCallback {
     public static synchronized void setUp(String modId, Runnable additional, Consumer<RegisterEvent> modResourceRegister, Consumer<RegisterCapabilitiesEvent> modCapabilityRegister) {
         if (!INITIALIZED.getAndSet(true)) {
             resolveInfoCmpError();
-            changeDist();
+            unfreezeGameData();
+            additional.run();
+            /*changeDist();
             SharedConstants.tryDetectVersion();
             setHandler();
             Bootstrap.bootStrap();
-            unfreezeGameData();
             ModLoadingContext.get().setActiveContainer(new DummyModContainer(modId));
             mockCapability();
             mockRegistries();
@@ -88,8 +86,7 @@ public final class MCTestInitializer implements BeforeAllCallback {
             setLanguage(modId);
             activateRegistry();
             registerModObjects(modResourceRegister.andThen(registerForgeObjects()));
-            registerCapabilities(modCapabilityRegister.andThen(registerNeoForgeCapabilities()));
-            additional.run();
+            registerCapabilities(modCapabilityRegister.andThen(registerNeoForgeCapabilities())); */
         }
     }
 

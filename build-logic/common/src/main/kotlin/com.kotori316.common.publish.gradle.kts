@@ -61,11 +61,13 @@ publishing {
     }
 }
 
+val pfName = project.name.split("-")[0]
+
 tasks.register("registerVersion", CallVersionFunctionTask::class) {
     functionEndpoint = CallVersionFunctionTask.readVersionFunctionEndpoint(project)
     gameVersion = mc
-    platform = project.name
-    platformVersion = pfVersion(project.name)
+    platform = pfName
+    platformVersion = pfVersion(pfName)
     modName = artifactName()
     changelog = project.provider { project.ext.get("generalDescription") as String }
     homepage = "https://github.com/Kotori316/special-octo-happiness"
@@ -74,7 +76,7 @@ tasks.register("registerVersion", CallVersionFunctionTask::class) {
 
 tasks.register("checkReleaseVersion", CallVersionCheckFunctionTask::class) {
     gameVersion = mc
-    platform = project.name
+    platform = pfName
     modName = artifactName()
     version = project.version.toString()
     failIfExists = !releaseDebug
