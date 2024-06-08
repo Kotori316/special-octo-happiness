@@ -29,8 +29,12 @@ develocity {
 }
 
 includeBuild("build-logic")
-include(":test-utility:common")
-include(":debug-utility:common")
+if (!System.getenv("DISABLE_TU").toBoolean()) {
+    include(":test-utility:common")
+}
+if (!System.getenv("DISABLE_DU").toBoolean()) {
+    include(":debug-utility:common")
+}
 if (!System.getenv("DISABLE_FORGE").toBoolean()) {
     if (!System.getenv("DISABLE_TU").toBoolean()) {
         include(":test-utility:forge")
