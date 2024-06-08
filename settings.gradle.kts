@@ -32,14 +32,26 @@ includeBuild("build-logic")
 include(":test-utility:common")
 include(":debug-utility:common")
 if (!System.getenv("DISABLE_FORGE").toBoolean()) {
-    include(":test-utility:forge")
-    include(":debug-utility:forge")
+    if (!System.getenv("DISABLE_TU").toBoolean()) {
+        include(":test-utility:forge")
+    }
+    if (!System.getenv("DISABLE_DU").toBoolean()) {
+        include(":debug-utility:forge")
+    }
 }
 if (!System.getenv("DISABLE_FABRIC").toBoolean()) {
-    include(":test-utility:fabric")
-    include(":debug-utility:fabric")
+    if (!System.getenv("DISABLE_TU").toBoolean()) {
+        include(":test-utility:fabric")
+    }
+    if (!System.getenv("DISABLE_DU").toBoolean()) {
+        include(":debug-utility:fabric")
+    }
 }
 if (!System.getenv("DISABLE_NEOFORGE").toBoolean()) {
-    include(":test-utility:neoforge")
-    include(":debug-utility:neoforge")
+    if (!System.getenv("DISABLE_TU").toBoolean()) {
+        include(":test-utility:neoforge")
+    }
+    if (!System.getenv("DISABLE_DU").toBoolean()) {
+        include(":debug-utility:neoforge")
+    }
 }

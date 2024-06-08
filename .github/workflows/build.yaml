@@ -9,6 +9,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    strategy:
+      matrix:
+        project:
+          - TU
+          - DU
+    env:
+      DISABLE_DU: ${{ matrix.project != 'DU' }}
+      DISABLE_TU: ${{ matrix.project != 'TU' }}
     steps:
       - uses: actions/checkout@v4
       - uses: gradle/actions/wrapper-validation@v3

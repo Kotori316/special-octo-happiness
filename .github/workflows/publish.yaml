@@ -12,6 +12,14 @@ jobs:
     permissions:
       id-token: write
       contents: write
+    strategy:
+      matrix:
+        project:
+          - TU
+          - DU
+    env:
+      DISABLE_DU: ${{ matrix.project != 'DU' }}
+      DISABLE_TU: ${{ matrix.project != 'TU' }}
     steps:
       - uses: actions/checkout@v4
       - uses: gradle/actions/wrapper-validation@v3
@@ -78,6 +86,6 @@ jobs:
         if: ${{ !cancelled() && !inputs.RELEASE_DEBUG }}
         uses: actions/upload-artifact@v4
         with:
-          name: special-octo-happiness-Maven-${{ github.run_number }}
+          name: special-octo-happiness-Maven-${{ matrix.project }}-${{ github.run_number }}
           retention-days: 1
           path: ~/.m2
