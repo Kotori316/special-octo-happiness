@@ -23,13 +23,15 @@ fun pfVersion(platform: String): String {
     }
 }
 
+val pfName = project.name.split("-")[0]
+
 // configure the maven publication
 publishing {
     publications {
         if (!releaseDebug) {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
-                artifactId = "${artifactName()}-${project.name}"
+                artifactId = "${artifactName()}-${pfName}"
                 pom {
                     description = project.provider { project.ext.get("generalDescription") as String }
                 }
@@ -37,7 +39,7 @@ publishing {
         }
         create<MavenPublication>("mavenLatest") {
             from(components["java"])
-            artifactId = "${artifactName()}-${project.name}"
+            artifactId = "${artifactName()}-${pfName}"
             version = project.property("maven_latest").toString()
             pom {
                 description = project.provider { project.ext.get("generalDescription") as String }
@@ -61,7 +63,6 @@ publishing {
     }
 }
 
-val pfName = project.name.split("-")[0]
 
 tasks.register("registerVersion", CallVersionFunctionTask::class) {
     functionEndpoint = CallVersionFunctionTask.readVersionFunctionEndpoint(project)

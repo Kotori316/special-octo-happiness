@@ -4,9 +4,11 @@ plugins {
     id("com.kotori316.common.java")
 }
 
+val pfName = project.name.split("-")[0]
+
 base {
     group = "com.kotori316"
-    archivesName = "${project.property("tu_archives_base_name")}-${project.name}"
+    archivesName = "${project.property("tu_archives_base_name")}-${pfName}"
     version = project.property("version")!!
 }
 
