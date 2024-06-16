@@ -21,5 +21,6 @@ gradle-app.setting
 .classpath
 .idea
 run
+runs
 Minecraft
 logs
