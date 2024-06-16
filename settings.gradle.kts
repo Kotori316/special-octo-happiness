@@ -37,10 +37,10 @@ if (!System.getenv("DISABLE_DU").toBoolean()) {
 }
 if (!System.getenv("DISABLE_FORGE").toBoolean()) {
     if (!System.getenv("DISABLE_TU").toBoolean()) {
-        include(":test-utility:forge")
+        // include(":test-utility:forge")
     }
     if (!System.getenv("DISABLE_DU").toBoolean()) {
-        include(":debug-utility:forge")
+        // include(":debug-utility:forge")
     }
 }
 if (!System.getenv("DISABLE_FABRIC").toBoolean()) {
