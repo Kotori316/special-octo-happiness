@@ -7,9 +7,7 @@ import net.minecraft.locale.Language;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathType;
-import net.minecraftforge.fml.unsafe.UnsafeHacks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -227,9 +225,9 @@ public final class MCTestInitializer implements BeforeAllCallback {
             .temperature(1300));
         try {
             var field = Fluid.class.getDeclaredField("forgeFluidType");
-            UnsafeHacks.setField(field, Fluids.EMPTY, airType);
-            UnsafeHacks.setField(field, Fluids.WATER, waterType);
-            UnsafeHacks.setField(field, Fluids.LAVA, lavaType);
+            // UnsafeHacks.setField(field, Fluids.EMPTY, airType);
+            // UnsafeHacks.setField(field, Fluids.WATER, waterType);
+            // UnsafeHacks.setField(field, Fluids.LAVA, lavaType);
         } catch (ReflectiveOperationException e) {
             throw new AssertionError(e);
         }
@@ -358,7 +356,6 @@ public final class MCTestInitializer implements BeforeAllCallback {
         public DummyModContainer(String name) {
             super(new DummyModInfo(name));
             this.name = name;
-            contextExtension = Object::new;
         }
 
         @Override
