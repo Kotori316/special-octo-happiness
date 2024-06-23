@@ -101,3 +101,10 @@ tasks.register('deobfJar', Jar) {
         attributes(jarAttributeMap)
     }
 }
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}

@@ -6,6 +6,7 @@ import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.Bootstrap;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.material.Fluid;
@@ -137,12 +138,12 @@ public final class MCTestInitializer implements BeforeAllCallback {
     @SuppressWarnings("unchecked")
     private static void mockCapability() {
         try {
-            var method = CapabilityManager.class.getDeclaredMethod("get", String.class, boolean.class);
+            var method = CapabilityManager.class.getDeclaredMethod("get", String.class, ResourceLocation.class, boolean.class);
             method.setAccessible(true);
-            var cap_IEnergyStorage = (Capability<IEnergyStorage>) method.invoke(CapabilityManager.INSTANCE, "IEnergyStorage", false);
-            var cap_IFluidHandler = (Capability<IFluidHandler>) method.invoke(CapabilityManager.INSTANCE, "IFluidHandler", false);
-            var cap_IFluidHandlerItem = (Capability<IFluidHandlerItem>) method.invoke(CapabilityManager.INSTANCE, "IFluidHandlerItem", false);
-            var cap_IItemHandler = (Capability<IItemHandler>) method.invoke(CapabilityManager.INSTANCE, "IItemHandler", false);
+            var cap_IEnergyStorage = (Capability<IEnergyStorage>) method.invoke(null, "IEnergyStorage", null, false);
+            var cap_IFluidHandler = (Capability<IFluidHandler>) method.invoke(null, "IFluidHandler", null, false);
+            var cap_IFluidHandlerItem = (Capability<IFluidHandlerItem>) method.invoke(null, "IFluidHandlerItem", null, false);
+            var cap_IItemHandler = (Capability<IItemHandler>) method.invoke(null, "IItemHandler", null, false);
             try (var mocked = mockStatic(CapabilityManager.class)) {
                 mocked.when(() -> CapabilityManager.get(any()))
                     .thenReturn(cap_IEnergyStorage)

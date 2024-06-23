@@ -17,7 +17,6 @@ import net.minecraftforge.common.crafting.conditions.ICondition;
 import org.junit.platform.commons.function.Try;
 import org.junit.platform.commons.support.ReflectionSupport;
 
-import java.lang.reflect.Method;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -59,7 +58,7 @@ public final class GameTestUtil {
 
     private static TestFunction createInternal(String modID, String batch, String testName, String structureName, Consumer<GameTestHelper> wrapped) {
         var snakeTestName = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, testName);
-        var structureLocation = new ResourceLocation(modID.toLowerCase(Locale.ROOT), modID + "." + structureName.toLowerCase(Locale.ROOT));
+        var structureLocation = ResourceLocation.fromNamespaceAndPath(modID.toLowerCase(Locale.ROOT), modID + "." + structureName.toLowerCase(Locale.ROOT));
         return new TestFunction(
             modID + "." + batch, snakeTestName,
             structureLocation.toString(), 100, 0L,
