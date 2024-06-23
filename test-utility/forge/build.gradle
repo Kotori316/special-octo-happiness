@@ -102,6 +102,12 @@ tasks.register('deobfJar', Jar) {
     }
 }
 
+sourceSets.main {
+    def dir = layout.buildDirectory.dir("sourcesSets/${it.name}")
+    it.output.setResourcesDir(dir)
+    it.java.destinationDirectory = dir
+}
+
 idea {
     module {
         downloadSources = true
