@@ -23,6 +23,7 @@ import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.ModLoader;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.forgespi.language.IConfigurable;
@@ -122,6 +123,11 @@ public final class MCTestInitializer implements BeforeAllCallback {
                     .getConstructor();
             launchHandlerConstructor.setAccessible(true);
             handler.set(null, launchHandlerConstructor.newInstance());
+
+            ModLoader instance = UnsafeHacks.newInstance(ModLoader.class);
+            Field modLoaderInstanceField = ModLoader.class.getDeclaredField("INSTANCE");
+            modLoaderInstanceField.setAccessible(true);
+            modLoaderInstanceField.set(null, instance);
         } catch (Exception e) {
             fail(e);
         }
