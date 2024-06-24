@@ -1,10 +1,12 @@
 package com.kotori316.testutil;
 
+import net.minecraft.SharedConstants;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.locale.Language;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.Bootstrap;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.pathfinder.PathType;
@@ -71,12 +73,12 @@ public final class MCTestInitializer implements BeforeAllCallback {
     public static synchronized void setUp(String modId, Runnable additional, Consumer<RegisterEvent> modResourceRegister, Consumer<RegisterCapabilitiesEvent> modCapabilityRegister) {
         if (!INITIALIZED.getAndSet(true)) {
             resolveInfoCmpError();
-            // unfreezeGameData();
+            SharedConstants.tryDetectVersion();
+            Bootstrap.bootStrap();
+            unfreezeGameData();
             additional.run();
             /*changeDist();
-            SharedConstants.tryDetectVersion();
             setHandler();
-            Bootstrap.bootStrap();
             ModLoadingContext.get().setActiveContainer(new DummyModContainer(modId));
             mockCapability();
             mockRegistries();
