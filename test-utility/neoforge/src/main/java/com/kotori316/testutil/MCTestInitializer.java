@@ -73,11 +73,12 @@ public final class MCTestInitializer implements BeforeAllCallback {
     public static synchronized void setUp(String modId, Runnable additional, Consumer<RegisterEvent> modResourceRegister, Consumer<RegisterCapabilitiesEvent> modCapabilityRegister) {
         if (!INITIALIZED.getAndSet(true)) {
             resolveInfoCmpError();
+            changeDist();
             SharedConstants.tryDetectVersion();
             Bootstrap.bootStrap();
             unfreezeGameData();
             additional.run();
-            /*changeDist();
+            /*
             setHandler();
             ModLoadingContext.get().setActiveContainer(new DummyModContainer(modId));
             mockCapability();
@@ -85,8 +86,8 @@ public final class MCTestInitializer implements BeforeAllCallback {
             setFluidType();
             setLanguage(modId);
             activateRegistry();
-            registerModObjects(modResourceRegister.andThen(registerForgeObjects()));
-            registerCapabilities(modCapabilityRegister.andThen(registerNeoForgeCapabilities())); */
+            registerModObjects(modResourceRegister.andThen(registerForgeObjects()));*/
+            registerCapabilities(modCapabilityRegister.andThen(registerNeoForgeCapabilities()));
         }
     }
 
@@ -341,12 +342,17 @@ public final class MCTestInitializer implements BeforeAllCallback {
         return CapabilityHooks::registerVanillaProviders;
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     private static void registerCapabilities(Consumer<RegisterCapabilitiesEvent> registerFunction) {
         try {
-            var constructor = RegisterCapabilitiesEvent.class.getDeclaredConstructor();
-            constructor.setAccessible(true);
-            var event = constructor.newInstance();
-            registerFunction.accept(event);
+            var initializedField = CapabilityHooks.class.getDeclaredField("initialized");
+            initializedField.setAccessible(true);
+            if (!initializedField.getBoolean(null)) {
+                var constructor = RegisterCapabilitiesEvent.class.getDeclaredConstructor();
+                constructor.setAccessible(true);
+                var event = constructor.newInstance();
+                registerFunction.accept(event);
+            }
         } catch (ReflectiveOperationException e) {
             throw new AssertionError(e);
         }
