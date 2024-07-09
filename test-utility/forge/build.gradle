@@ -19,6 +19,7 @@ String mod_id = "test_utility"
 println "Java: ${System.getProperty "java.version"}, JVM: ${System.getProperty "java.vm.version"} (${System.getProperty "java.vendor"}), Arch: ${System.getProperty "os.arch"}"
 minecraft {
     mappings(channel: "parchment", version: "${project.property("parchment_minecraft")}-${project.property("parchment_mapping")}-${project.property("minecraft")}")
+    reobf = false
     runs {
         create("client") {
             workingDirectory(project.file("Minecraft"))
@@ -90,8 +91,6 @@ jar {
         attributes(jarAttributeMap)
     }
 }
-
-jar.finalizedBy("reobfJar")
 
 tasks.register('deobfJar', Jar) {
     from sourceSets.main.output
