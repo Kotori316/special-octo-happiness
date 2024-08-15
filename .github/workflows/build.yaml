@@ -29,7 +29,6 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: ${{github.event_name != 'push'}}
-          gradle-home-cache-cleanup: true
       - run: ./gradlew checkReleaseVersion build --scan
 
   release-snapshot:
