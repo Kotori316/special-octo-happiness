@@ -69,7 +69,7 @@ jobs:
           -PjarSign.keyLocation="${HOME}/kotori316_keystore.jks"
           -PjarSign.keyAlias="ko316"
           -PjarSign.storePass="${JAR_PASSWORD}"
-          build ${{ !inputs.RELEASE_DEBUG && 'registerVersion' || '' }} publishToMavenLocal publish
+          assemble ${{ !inputs.RELEASE_DEBUG && 'registerVersion' || '' }} publishToMavenLocal publish
         env:
           VERSION_FUNCTION_ENDPOINT: ${{ secrets.GCP_VERSION_FUNCTION_ENDPOINT }}
           SERVICE_ACCOUNT: ${{ secrets.GCP_FUNCTION_EXECUTION_ACCOUNT }}

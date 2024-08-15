@@ -29,6 +29,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: true
+      - run: ./gradlew testClasses
       - run: ./gradlew test
         env:
           DISABLE_NEOFORGE: true
