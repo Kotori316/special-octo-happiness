@@ -42,6 +42,7 @@ import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.platform.commons.function.Try;
 import org.junit.platform.commons.support.ReflectionSupport;
+import org.mockito.MockedConstruction;
 import sun.misc.Unsafe;
 
 import java.io.InputStream;
@@ -74,6 +75,7 @@ public final class MCTestInitializer implements BeforeAllCallback {
         });
     }
 
+    @SuppressWarnings("removal") // Intended
     public static synchronized void setUp(String modId, Runnable additional, Consumer<RegisterEvent> modResourceRegister) {
         if (!INITIALIZED.getAndSet(true)) {
             resolveInfoCmpError();
@@ -124,10 +126,9 @@ public final class MCTestInitializer implements BeforeAllCallback {
             launchHandlerConstructor.setAccessible(true);
             handler.set(null, launchHandlerConstructor.newInstance());
 
-            ModLoader instance = UnsafeHacks.newInstance(ModLoader.class);
-            Field modLoaderInstanceField = ModLoader.class.getDeclaredField("INSTANCE");
-            modLoaderInstanceField.setAccessible(true);
-            modLoaderInstanceField.set(null, instance);
+            try (MockedConstruction<ModLoader> ignore = mockConstruction(ModLoader.class)) {
+                var ignored = ModLoader.get();
+            }
         } catch (Exception e) {
             fail(e);
         }
