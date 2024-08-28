@@ -16,6 +16,12 @@ tasks.withType(JavaCompile::class) {
 
 tasks.test {
     useJUnitPlatform()
+    if (project.name.contains("neoforge")) {
+        // Hack the NeoGradle setting, as it contains stupid configuration
+        // disable test task as it fails due to accessing Minecraft resources
+        // instead Neo adds another test task named "testJunit" and "build" depends on it
+        enabled = false
+    }
 }
 
 repositories {
