@@ -9,8 +9,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod(TestUtilityCommon.MOD_ID)
 public final class TestUtilMod {
 
-    public TestUtilMod() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::changeReporter);
+    public TestUtilMod(FMLJavaModLoadingContext context) {
+        context.getModEventBus().addListener(this::changeReporter);
     }
 
     void changeReporter(RegisterGameTestsEvent event) {
