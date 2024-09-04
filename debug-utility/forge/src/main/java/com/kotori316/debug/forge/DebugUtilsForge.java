@@ -16,8 +16,8 @@ import net.minecraftforge.fml.loading.FMLLoader;
 @Mod(DebugUtils.MOD_ID)
 public class DebugUtilsForge {
 
-    public DebugUtilsForge() {
-        var modBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public DebugUtilsForge(FMLJavaModLoadingContext context) {
+        var modBus = context.getModEventBus();
         if (FMLLoader.getDist().isClient()) {
             modBus.addListener(this::loadComplete);
         }
