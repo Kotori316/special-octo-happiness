@@ -1,6 +1,6 @@
 [versions]
 gradle_cf = "3.1"
-gradle_neoforge = "7.0.162"
+gradle_neoforge = "7.0.163"
 
 [plugins]
 cf = { id = "com.kotori316.plugin.cf", version.ref = "gradle_cf" }
