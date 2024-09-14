@@ -10,8 +10,7 @@ val mc: String = project.property("minecraft").toString()
 val releaseDebug: Boolean = (System.getenv("RELEASE_DEBUG") ?: "true").toBoolean()
 
 fun artifactName(): String {
-    val p = project.path
-    return p.split(':')[1]
+    return "debug-utility"
 }
 
 fun pfVersion(platform: String): String {
