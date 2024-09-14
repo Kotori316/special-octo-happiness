@@ -4,7 +4,7 @@ import java.time.format.DateTimeFormatter
 plugins {
     id("com.kotori316.common.java")
     id("com.kotori316.common.publish")
-    id("com.kotori316.common.signing")
+    // id("com.kotori316.common.signing")
     alias(libs.plugins.neoforge.gradle)
 }
 
