@@ -2,7 +2,7 @@ modLoader = "javafml"
 loaderVersion = "[1,)"
 license = "All rights reserved"
 [[mods]]
-modId = "test_utility"
+modId = "debug_utils"
 version = "${file.jarVersion}"
 displayName = "Test Utility"
 credits = "Thanks for this example mod goes to Java"
@@ -10,7 +10,7 @@ authors = "Love, Cheese and small house plants"
 description = '''
 Test Utility
 '''
-[[dependencies.test_utility]]
+[[dependencies.debug_utils]]
 modId = "neoforge"
 type = "required"
 versionRange = "[21, )"

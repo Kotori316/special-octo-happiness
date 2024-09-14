@@ -4,6 +4,7 @@ import com.kotori316.debug.ClientSetting;
 import com.kotori316.debug.DebugUtils;
 import com.kotori316.debug.ServerSetting;
 import com.kotori316.debug.command.CommandRegister;
+import com.kotori316.testutil.TestUtilMod;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -23,6 +24,7 @@ public class DebugUtilsNeoForge {
         var forgeBus = NeoForge.EVENT_BUS;
         forgeBus.addListener(this::registerCommand);
         forgeBus.addListener(this::serverLoggedIn);
+        TestUtilMod.register(modBus);
     }
 
     void registerCommand(RegisterCommandsEvent event) {

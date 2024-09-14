@@ -60,7 +60,3 @@ dependencies {
 val mc: String = project.property("minecraft").toString()
 val generalDescription = "special-octo-happiness(${project.version}) for Minecraft $mc with ${project.name}"
 ext.set("generalDescription", generalDescription)
-
-tasks {
-    create("idePostSync")
-}

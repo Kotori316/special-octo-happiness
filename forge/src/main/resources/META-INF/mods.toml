@@ -2,7 +2,7 @@ modLoader = "javafml"
 loaderVersion = "[41,)"
 license = "All rights reserved"
 [[mods]]
-modId = "test_utility"
+modId = "debug_utils"
 version = "${file.jarVersion}"
 displayName = "Test Utility"
 credits = "Thanks for this example mod goes to Java"
@@ -10,13 +10,13 @@ authors = "Love, Cheese and small house plants"
 description = '''
 Test Utility
 '''
-[[dependencies.test_utility]]
+[[dependencies.debug_utils]]
 modId = "forge"
 mandatory = true
 versionRange = "[41.0.94,)"
 ordering = "NONE"
 side = "BOTH"
-[[dependencies.test_utility]]
+[[dependencies.debug_utils]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.19, )"
