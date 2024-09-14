@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("idea")
 }
 
 java {
@@ -7,6 +8,12 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
     withSourcesJar()
+}
+
+base {
+    group = "com.kotori316"
+    archivesName = "${project.property("archives_base_name")}-${project.name}"
+    version = project.property("version")!!
 }
 
 tasks.withType(JavaCompile::class) {
@@ -32,6 +39,8 @@ repositories {
             includeGroup("com.mojang")
         }
     }
+    maven { url = uri("https://maven.parchmentmc.org") }
+    mavenCentral()
 }
 
 dependencies {
@@ -40,4 +49,13 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     implementation("net.sf.jopt-simple:jopt-simple:5.0.4") { version { strictly("5.0.4") } }
+}
+
+val mc: String = project.property("minecraft").toString()
+val generalDescription = "special-octo-happiness(${project.version}) for Minecraft $mc with ${project.name}"
+ext.set("generalDescription", generalDescription)
+
+tasks {
+    create("idePostSync")
+    create("prepareWorkspace")
 }
