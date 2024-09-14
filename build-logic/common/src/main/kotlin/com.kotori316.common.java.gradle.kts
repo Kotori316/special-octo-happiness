@@ -1,6 +1,7 @@
 plugins {
-    id("java")
-    id("idea")
+    java
+    `java-library`
+    idea
 }
 
 java {
@@ -49,6 +50,11 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     implementation("net.sf.jopt-simple:jopt-simple:5.0.4") { version { strictly("5.0.4") } }
+
+    api(platform("org.junit:junit-bom:${project.property("jupiter")}"))
+    api("org.junit.jupiter:junit-jupiter")
+    api("org.mockito:mockito-core:${project.property("mockito_core")}")
+    api("org.mockito:mockito-inline:${project.property("mockito_inline")}")
 }
 
 val mc: String = project.property("minecraft").toString()
