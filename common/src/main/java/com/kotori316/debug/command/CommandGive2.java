@@ -1,7 +1,5 @@
 package com.kotori316.debug.command;
 
-import java.util.Collection;
-
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -13,6 +11,8 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.commands.arguments.item.ItemInput;
 import net.minecraft.server.level.ServerPlayer;
+
+import java.util.Collection;
 
 public class CommandGive2 {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {

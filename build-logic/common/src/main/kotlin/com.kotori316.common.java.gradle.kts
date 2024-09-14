@@ -57,5 +57,4 @@ ext.set("generalDescription", generalDescription)
 
 tasks {
     create("idePostSync")
-    create("prepareWorkspace")
 }
