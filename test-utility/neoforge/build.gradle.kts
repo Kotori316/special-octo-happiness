@@ -12,9 +12,15 @@ plugins {
     alias(libs.plugins.neoforge.gradle)
 }
 
-String mod_id = "test_utility_neo"
+val mod_id = "test_utility_neo"
 
-println "Java: ${System.getProperty "java.version"}, JVM: ${System.getProperty "java.vm.version"} (${System.getProperty "java.vendor"}), Arch: ${System.getProperty "os.arch"}"
+println(
+    "Java: ${System.getProperty("java.version")}, JVM: ${System.getProperty("java.vm.version")} (${
+        System.getProperty(
+            "java.vendor"
+        )
+    }), Arch: ${System.getProperty("os.arch")}"
+)
 runs {
     /*client {
         workingDirectory.set(project.file("Minecraft"))
@@ -42,58 +48,54 @@ subsystems {
 repositories {
     mavenCentral()
     maven {
-        name = "Azure-SLP"
-        url = uri("https://pkgs.dev.azure.com/Kotori316/minecraft/_packaging/mods/maven/v1")
+        url = uri("https://maven.kotori316.com")
         content {
             includeModule("org.typelevel", "cats-core_3")
             includeModule("org.typelevel", "cats-kernel_3")
-            includeVersion("com.kotori316", "test_utility_dependency", "2.0-SNAPSHOT")
         }
     }
 }
 
-def commonProject = project.findProject(":test-utility:common")
+val commonProject = project.project(":test-utility:common")
 dependencies {
-    implementation(group: "net.neoforged", name: "neoforge", version: project.property("neo_version").toString())
+    // implementation(group = "net.neoforged", name = "neoforge", version = project.property("neo_version").toString())
 
-    if (commonProject != null) {
-        compileOnly(commonProject)
-    }
+    compileOnly(commonProject)
 }
 
-processResources {
-    from (commonProject.sourceSets.main.resources)
+tasks.processResources {
+    from(commonProject.sourceSets.main.get().resources)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
-tasks.named("compileJava", JavaCompile).configure {
-    source(commonProject.sourceSets.main.allSource)
+tasks.named("compileJava", JavaCompile::class).configure {
+    source(commonProject.sourceSets.main.get().allSource)
 }
 
-test {
+tasks.test {
     useJUnitPlatform()
 }
 
-def jarAttributeMap = [
-        "Specification-Title"     : mod_id,
-        "Specification-Vendor"    : "Kotori316",
-        "Specification-Version"   : "1", // We are version 1 of ourselves
-        "Implementation-Title"    : project.name,
-        "Implementation-Version"  : project.jar.archiveVersion,
-        "Implementation-Vendor"   : "Kotori316",
-        "Implementation-Timestamp": ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT),
-        "MixinConfigs"            : "${mod_id}.mixins.json",
-        "Automatic-Module-Name"   : mod_id,
-]
+val jarAttributeMap = mapOf(
+    "Specification-Title" to mod_id,
+    "Specification-Vendor" to "Kotori316",
+    "Specification-Version" to "1", // We are version 1 of ourselves
+    "Implementation-Title" to project.name,
+    "Implementation-Version" to tasks.jar.get().archiveVersion,
+    "Implementation-Vendor" to "Kotori316",
+    "Implementation-Timestamp" to ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT),
+    "MixinConfigs" to "${mod_id}.mixins.json",
+    "Automatic-Module-Name" to mod_id,
+)
 
-jar {
+tasks.jar {
     manifest {
         attributes(jarAttributeMap)
     }
 }
 
-tasks.register('deobfJar', Jar) {
-    from sourceSets.main.output
+tasks.register("deobfJar", Jar::class) {
+    from(sourceSets.main.get().output)
     archiveClassifier.set("deobf")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
