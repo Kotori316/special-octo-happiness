@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
-	"id": "test_utility",
+	"id": "debug_utils",
 	"version": "${version}",
-	"name": "Test Utility",
-	"description": "Test utility",
+	"name": "Debug Utility",
+	"description": "Debug Utility",
 	"authors": [
 		"Kotori316"
 	],
@@ -12,11 +12,15 @@
 		"sources": "https://github.com/Kotori316/special-octo-happiness"
 	},
 	"license": "All Rights Reserved",
-	"icon": "assets/test_utility/tu.png",
+	"icon": "assets/debug_utility/du.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
+			"com.kotori316.debug.fabric.DebugUtilsFabric",
 			"com.kotori316.testutil.TestUtility"
+		],
+		"client": [
+			"com.kotori316.debug.fabric.DebugUtilsFabricClient"
 		]
 	},
 	"mixins": [
@@ -30,8 +34,7 @@
 		}
 	],
 	"depends": {
-		"fabricloader": ">=0.14.21",
-		"minecraft": ">=1.21",
+		"minecraft": ">=1.21.1",
 		"java": ">=21",
 		"fabric-api": "*"
 	}
