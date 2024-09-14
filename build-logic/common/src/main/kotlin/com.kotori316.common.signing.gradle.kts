@@ -56,19 +56,17 @@ abstract class JarSignTask : DefaultTask() {
     }
 }
 
-afterEvaluate {
-    tasks {
-        listOf("jar", "deobfJar", "remapJar", "sourcesJar").forEach { name ->
-            findByName(name)?.let { task ->
-                val signTask = register(
-                    "jksSign" + name
-                        .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                    JarSignTask::class,
-                ) {
-                    jarTask = task as org.gradle.jvm.tasks.Jar
-                }
-                task.finalizedBy(signTask)
+tasks {
+    listOf("jar", "deobfJar", "remapJar", "sourcesJar").forEach { name ->
+        findByName(name)?.let { task ->
+            val signTask = register(
+                "jksSign" + name
+                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
+                JarSignTask::class,
+            ) {
+                jarTask = task as org.gradle.jvm.tasks.Jar
             }
+            task.finalizedBy(signTask)
         }
     }
 }
