@@ -4,12 +4,5 @@
     "github>Kotori316/common-script:renovate-default"
   ],
   "packageRules": [
-    {
-      "matchPackageNames": [
-        "neoforge-du:neoforge-du.gradle.plugin",
-        "neoforge-tu:neoforge-tu.gradle.plugin"
-      ],
-      "enabled": false
-    }
   ]
 }
