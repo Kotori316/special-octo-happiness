@@ -10,6 +10,22 @@ plugins {
 
 val modId = "debug_utility"
 
+runs {
+    create("client") {
+        workingDirectory.set(project.file("Minecraft"))
+        systemProperties.put("forge.logging.markers", "REGISTRIES")
+        systemProperties.put("mixin.env.remapRefMap", "true")
+        systemProperties.put("mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg")
+        systemProperties.put("mixin.debug.export", "true")
+        systemProperties.put("forge.logging.console.level", "debug")
+        arguments("--username", "Kotori")
+        modSources.add(project.sourceSets["main"])
+    }
+    create("junit") {
+        unitTestSources.add("test", project.sourceSets["main"], project.sourceSets["test"])
+    }
+}
+
 subsystems {
     parchment {
         minecraftVersion = project.property("parchment_minecraft") as String
