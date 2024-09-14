@@ -9,15 +9,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    strategy:
-      matrix:
-        project:
-          - TU
-          - DU
-      fail-fast: false
-    env:
-      DISABLE_DU: ${{ matrix.project != 'DU' }}
-      DISABLE_TU: ${{ matrix.project != 'TU' }}
     steps:
       - uses: actions/checkout@v4
       - uses: gradle/actions/wrapper-validation@v4
@@ -41,15 +32,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    strategy:
-      matrix:
-        project:
-          - TU
-          - DU
-      fail-fast: false
-    env:
-      DISABLE_DU: ${{ matrix.project != 'DU' }}
-      DISABLE_TU: ${{ matrix.project != 'TU' }}
     steps:
       - uses: actions/checkout@v4
       - uses: gradle/actions/wrapper-validation@v4
@@ -61,7 +43,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: ${{github.event_name != 'push'}}
-      - run: ./gradlew checkReleaseVersion assemble --scan
+      - run: ./gradlew checkReleaseVersion assemble publishToMavenLocal --scan
 
   release-snapshot:
     needs: [ 'build', 'test' ]

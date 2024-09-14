@@ -1,5 +1,3 @@
-import org.gradle.configurationcache.extensions.capitalized
-
 plugins {
     id("maven-publish")
     id("signing")
@@ -60,11 +58,15 @@ abstract class JarSignTask : DefaultTask() {
 
 tasks {
     listOf("jar", "deobfJar", "remapJar", "sourcesJar").forEach { name ->
-        findByName(name)?.let {
-            val signTask = register("jksSign" + name.capitalized(), JarSignTask::class) {
-                jarTask = it as org.gradle.jvm.tasks.Jar
+        findByName(name)?.let { task ->
+            val signTask = register(
+                "jksSign" + name
+                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
+                JarSignTask::class,
+            ) {
+                jarTask = task as org.gradle.jvm.tasks.Jar
             }
-            it.finalizedBy(signTask)
+            task.finalizedBy(signTask)
         }
     }
 }

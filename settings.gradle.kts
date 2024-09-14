@@ -29,35 +29,13 @@ develocity {
 }
 
 includeBuild("build-logic")
-if (!System.getenv("DISABLE_TU").toBoolean()) {
-    include(":test-utility:common")
-}
-if (!System.getenv("DISABLE_DU").toBoolean()) {
-    include(":debug-utility:common")
-}
+include(":common")
 if (!System.getenv("DISABLE_FORGE").toBoolean()) {
-    if (!System.getenv("DISABLE_TU").toBoolean()) {
-        include(":test-utility:forge")
-    }
-    if (!System.getenv("DISABLE_DU").toBoolean()) {
-        include(":debug-utility:forge")
-    }
+    include(":forge")
 }
 if (!System.getenv("DISABLE_FABRIC").toBoolean()) {
-    if (!System.getenv("DISABLE_TU").toBoolean()) {
-        include(":test-utility:fabric")
-    }
-    if (!System.getenv("DISABLE_DU").toBoolean()) {
-        include(":debug-utility:fabric")
-    }
+    include(":fabric")
 }
 if (!System.getenv("DISABLE_NEOFORGE").toBoolean()) {
-    if (!System.getenv("DISABLE_TU").toBoolean()) {
-        include(":test-utility:neoforge")
-        project(":test-utility:neoforge").name = "neoforge-tu"
-    }
-    if (!System.getenv("DISABLE_DU").toBoolean()) {
-        include(":debug-utility:neoforge")
-        project(":debug-utility:neoforge").name = "neoforge-du"
-    }
+    include(":neoforge")
 }
