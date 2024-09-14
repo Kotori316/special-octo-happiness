@@ -43,7 +43,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: ${{github.event_name != 'push'}}
-      - run: ./gradlew checkReleaseVersion assemble --scan
+      - run: ./gradlew checkReleaseVersion assemble publishToMavenLocal --scan
 
   release-snapshot:
     needs: [ 'build', 'test' ]
