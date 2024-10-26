@@ -5,7 +5,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 
@@ -17,7 +16,7 @@ public class CommandKillItems {
                 .executes(c -> {
                     var world = c.getSource().getLevel();
                     var entities = world.getEntities(EntityType.ITEM, EntitySelector.ENTITY_STILL_ALIVE);
-                    entities.forEach(Entity::kill);
+                    entities.forEach(e -> e.kill(world));
                     c.getSource().sendSuccess(() -> Component.translatable("commands.kill.success.multiple", entities.size()), true);
                     return Command.SINGLE_SUCCESS;
                 });

@@ -131,7 +131,7 @@ public final class MCTestInitializer implements BeforeAllCallback {
      */
     @SuppressWarnings({"deprecation", "UnstableApiUsage"})
     private static void unfreezeGameData() {
-        BuiltInRegistries.REGISTRY.stream().filter(r -> r instanceof MappedRegistry).forEach(r -> ((MappedRegistry<?>) r).unfreeze());
+        BuiltInRegistries.REGISTRY.stream().filter(r -> r instanceof MappedRegistry).forEach(r -> ((MappedRegistry<?>) r).unfreeze(false));
     }
 
     private static void mockCapability() {
