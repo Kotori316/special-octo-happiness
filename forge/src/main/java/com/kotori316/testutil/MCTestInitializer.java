@@ -191,7 +191,7 @@ public final class MCTestInitializer implements BeforeAllCallback {
         when(s.getDelegate((T) any())) // Return: Optional<Holder.Reference<V>>
             .thenAnswer(invocation -> {
                 T arg = invocation.getArgument(0);
-                return Optional.of(Holder.Reference.createIntrusive(wrapper.asLookup(), arg));
+                return Optional.of(Holder.Reference.createIntrusive(wrapper, arg));
             });
 
         var theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
