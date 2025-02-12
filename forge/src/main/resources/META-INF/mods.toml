@@ -13,12 +13,12 @@ Test Utility
 [[dependencies.debug_utils]]
 modId = "forge"
 mandatory = true
-versionRange = "[41.0.94,)"
+versionRange = "[54.0.35,)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.debug_utils]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19, )"
+versionRange = "[1.21.4, )"
 ordering = "NONE"
 side = "BOTH"
