@@ -3,8 +3,9 @@ package com.kotori316.testutil;
 import net.minecraft.core.Direction;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 final class AccessTest {
     @Test
@@ -24,5 +25,15 @@ final class AccessTest {
         var values = Direction.class.getEnumConstants();
         assertNotNull(values);
         assertTrue(values.length > 0);
+    }
+
+    @Test
+    void accessValue() {
+        var clazz = Direction.class;
+        System.out.println(Arrays.toString(clazz.getDeclaredMethods()));
+        var method = assertDoesNotThrow(() -> clazz.getDeclaredMethod("values"));
+        assertNotNull(method);
+        var array = assertDoesNotThrow(() -> method.invoke(null));
+        assertInstanceOf(Direction[].class, array);
     }
 }
