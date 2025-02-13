@@ -54,18 +54,18 @@ dependencies {
     api(platform("org.junit:junit-bom:${project.property("jupiter")}"))
     api("org.junit.jupiter:junit-jupiter")
     api("org.mockito:mockito-core:${project.property("mockito_core")}") {
-        if (project.name.contains("neoforge")) {
-            exclude(group = "org.ow2.asm")
-        }
+        /* if (project.name.contains("neoforge")) {
+             exclude(group = "org.ow2.asm")
+         }*/
     }
     api("org.mockito:mockito-inline:${project.property("mockito_inline")}") {
-        if (project.name.contains("neoforge")) {
+        /*if (project.name.contains("neoforge")) {
             exclude(group = "org.ow2.asm")
-        }
+        }*/
     }
 }
 
-if (project.name.contains("neoforge")) {
+/*if (project.name.contains("neoforge")) {
     configurations.all {
         resolutionStrategy.eachDependency {
             if (requested.group == "org.ow2.asm" && requested.name.startsWith("asm")) {
@@ -73,7 +73,7 @@ if (project.name.contains("neoforge")) {
             }
         }
     }
-}
+}*/
 
 val mc: String = project.property("minecraft").toString()
 val generalDescription = "special-octo-happiness(${project.version}) for Minecraft $mc with ${project.name}"

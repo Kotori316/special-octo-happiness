@@ -7,7 +7,7 @@ plugins {
     // id("com.kotori316.common.signing")
     id("net.minecraftforge.gradle") version ("[6.0,6.2)")
     id("org.parchmentmc.librarian.forgegradle") version ("1.+")
-    id("org.spongepowered.mixin") version ("0.7.38")
+    // id("org.spongepowered.mixin") version ("0.7.38")
 }
 
 val modId = "debug_util"
@@ -75,11 +75,10 @@ tasks.jar {
     }
 }
 
-
-sourceSets.main {
-    val dir = layout.buildDirectory.dir("sourcesSets/$name")
-    output.setResourcesDir(dir)
-    java.destinationDirectory = dir
+sourceSets.forEach {
+    val dir = layout.buildDirectory.dir("sourcesSets/${it.name}")
+    it.output.setResourcesDir(dir)
+    it.java.destinationDirectory = dir
 }
 
 idea {
