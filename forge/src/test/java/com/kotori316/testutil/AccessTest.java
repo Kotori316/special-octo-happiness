@@ -3,8 +3,6 @@ package com.kotori316.testutil;
 import net.minecraft.core.Direction;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 final class AccessTest {
@@ -30,7 +28,9 @@ final class AccessTest {
     @Test
     void accessValue() {
         var clazz = Direction.class;
-        System.out.println(Arrays.toString(clazz.getDeclaredMethods()));
+        for (var method : clazz.getDeclaredMethods()) {
+            System.out.println(method);
+        }
         var method = assertDoesNotThrow(() -> clazz.getDeclaredMethod("values"));
         assertNotNull(method);
         var array = assertDoesNotThrow(() -> method.invoke(null));

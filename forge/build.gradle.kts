@@ -6,7 +6,7 @@ plugins {
     id("com.kotori316.common.publish")
     // id("com.kotori316.common.signing")
     id("net.minecraftforge.gradle") version ("[6.0,6.2)")
-    id("org.parchmentmc.librarian.forgegradle") version ("1.+")
+    // id("org.parchmentmc.librarian.forgegradle") version ("1.+")
     // id("org.spongepowered.mixin") version ("0.7.38")
 }
 
@@ -17,8 +17,8 @@ minecraft {
         "${project.property("parchment_minecraft")}-${project.property("parchment_mapping")}-${project.property("minecraft")}"
     mappings(
         mapOf(
-            "channel" to "parchment",
-            "version" to mappingVersion,
+            "channel" to "official",
+            "version" to "${project.property("minecraft")}",
         )
     )
     reobf = false
