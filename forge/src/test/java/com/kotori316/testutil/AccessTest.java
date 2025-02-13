@@ -14,8 +14,15 @@ final class AccessTest {
     }
 
     @Test
-    void accessValues() {
+    void accessClass() {
         var clazz = Direction.class;
         assertTrue(clazz.isEnum());
+    }
+
+    @Test
+    void accessLength() {
+        var values = Direction.class.getEnumConstants();
+        assertNotNull(values);
+        assertTrue(values.length > 0);
     }
 }
