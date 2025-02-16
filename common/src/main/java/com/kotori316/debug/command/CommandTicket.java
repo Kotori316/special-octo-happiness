@@ -9,7 +9,10 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.Ticket;
 import net.minecraft.world.level.ChunkPos;
+
+import java.util.Set;
 
 public final class CommandTicket {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -22,9 +25,19 @@ public final class CommandTicket {
         var data = commandContext.getSource();
         var distanceManager = data.getLevel().getChunkSource().chunkMap.getDistanceManager();
         var chunkPos = new ChunkPos(pos);
-        var tickets = TicketListProvider.getTicket(distanceManager);
-        data.sendSystemMessage(Component.literal("Tickets for chunk %s(%s) is %s".formatted(chunkPos, pos, tickets)));
+        var tickets = TicketListProvider.getTicketForPos(distanceManager, chunkPos);
+        var message = Component.literal("Tickets for chunk %s(%s) is %s".formatted(chunkPos, pos.toShortString(), tickets.size()))
+            .append(Component.literal(System.lineSeparator()))
+            .append(formatTickets(tickets));
+        data.sendSystemMessage(message);
 
         return Command.SINGLE_SUCCESS;
+    }
+
+    static Component formatTickets(Set<Ticket<?>> tickets) {
+        return tickets.stream()
+            .map(Ticket::toString)
+            .map(Component::literal)
+            .reduce(Component.empty(), (a, b) -> a.append(b).append(Component.literal(System.lineSeparator())));
     }
 }
