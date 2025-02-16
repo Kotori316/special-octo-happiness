@@ -10,6 +10,10 @@ minecraft {
     version(mc)
 }
 
+repositories {
+    maven { url = uri("https://maven.fabricmc.net/") }
+}
+
 dependencies {
     compileOnly("net.fabricmc:sponge-mixin:0.15.2+mixin.0.8.7")
 }
