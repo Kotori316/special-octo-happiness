@@ -9,3 +9,7 @@ val mc: String = project.property("minecraft").toString()
 minecraft {
     version(mc)
 }
+
+dependencies {
+    compileOnly("net.fabricmc:sponge-mixin:0.15.2+mixin.0.8.7")
+}

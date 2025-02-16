@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "package": "com.kotori316.debug.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "mixins": [
+    "MixinDistanceManager"
+  ]
+}

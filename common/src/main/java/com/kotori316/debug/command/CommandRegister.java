@@ -13,5 +13,6 @@ public class CommandRegister {
         CommandSetStone.register(dispatcher);
         CommandToggleMode.register(dispatcher);
         CommandSetY.register(dispatcher);
+        CommandTicket.register(dispatcher);
     }
 }
