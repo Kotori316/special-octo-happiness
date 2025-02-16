@@ -1,4 +1,4 @@
-package com.kotori316.debug.mixin;
+package com.kotori316.testutil.mixin;
 
 import com.kotori316.debug.ticket.TicketListProvider;
 import it.unimi.dsi.fastutil.longs.Long2ObjectFunction;

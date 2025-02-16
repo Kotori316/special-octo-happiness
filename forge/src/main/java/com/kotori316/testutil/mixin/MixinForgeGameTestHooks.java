@@ -19,7 +19,7 @@ public final class MixinForgeGameTestHooks {
         target = "Ljava/util/Collection;add(Ljava/lang/Object;)Z",
         shift = At.Shift.AFTER,
         by = 1
-    ))
+    ), remap = false)
     private static void logTestName(Collection<TestFunction> functions, Set<String> classes, Set<String> filters, TestFunction func, CallbackInfo ci) {
         TestUtilityCommon.logTestName(func, null);
     }
