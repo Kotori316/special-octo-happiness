@@ -6,7 +6,6 @@
 	"mixins": [
 		"FabricGameTestHelperMixin",
 		"MixinDistanceManager",
-		"MixinGameTestRegistry",
 		"StructureTemplateManagerMixin"
 	],
 	"injectors": {

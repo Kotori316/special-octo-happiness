@@ -6,8 +6,6 @@
   "mixins": [
     "MixinDataGenerator",
     "MixinDistanceManager",
-    "MixinGameTestRegistry",
-    "MixinGameTestSequence",
     "MixinHashCache",
     "MixinStructureTemplateManager"
   ]
