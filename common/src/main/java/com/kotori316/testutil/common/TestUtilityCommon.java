@@ -17,10 +17,7 @@ public class TestUtilityCommon {
 
     public static void logTestName(Object maybeTest, @Nullable Method createFrom) {
         if (Boolean.parseBoolean(System.getenv("TEST_UTILITY_LOG_ALL_TEST"))) {
-            if (maybeTest instanceof TestFunction testFunction) {
-                TEST_LOADER_LOGGER.info("Register {}(batch: {}, structure: {}) from {}",
-                    testFunction.testName(), testFunction.batchName(), testFunction.structureName(), createFrom);
-            }
+            TEST_LOADER_LOGGER.info("{} is loaded.", maybeTest);
         }
     }
 

@@ -26,14 +26,15 @@ public final class CreateFileReporter implements TestReporter {
             if (Files.notExists(parentDir)) {
                 Files.createDirectories(parentDir);
             }
-            var matcher = INVALID_LETTERS.matcher(pTestInfo.getTestName());
+            var testName = pTestInfo.id().getPath();
+            var matcher = INVALID_LETTERS.matcher(testName);
             var file = parentDir.resolve(matcher.replaceAll("-") + ".txt");
             var error = Optional.ofNullable(pTestInfo.getError())
                 .map(Throwables::toStringList)
                 .orElse(List.of());
             Files.write(file, List.of(
                 "Test failed.",
-                pTestInfo.getTestName(),
+                testName,
                 "Runs %d ms".formatted(pTestInfo.getRunTime()),
                 String.join("\n", error)
             ));

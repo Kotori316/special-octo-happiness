@@ -18,7 +18,7 @@ public class CommandToggleMode {
                     var player = c.getSource().getPlayerOrException();
                     if (player.isCreative()) {
                         player.setGameMode(GameType.SURVIVAL);
-                        player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, 5));
+                        player.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 100, 5));
                         player.displayClientMessage(Component.literal("Changed to Survival"), false);
                     } else {
                         player.setGameMode(GameType.CREATIVE);

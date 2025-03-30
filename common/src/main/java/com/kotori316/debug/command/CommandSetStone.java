@@ -32,7 +32,7 @@ public class CommandSetStone {
             container.clearContent();
         }
         if (level.setBlock(pos, Blocks.STONE.defaultBlockState(), Block.UPDATE_CLIENTS)) {
-            level.blockUpdated(pos, Blocks.STONE);
+            level.updateNeighborsAt(pos, Blocks.STONE);
             context.getSource().sendSuccess(() -> Component.translatable("commands.setblock.success", pos.getX(), pos.getY(), pos.getZ()), true);
             return Command.SINGLE_SUCCESS;
         } else {

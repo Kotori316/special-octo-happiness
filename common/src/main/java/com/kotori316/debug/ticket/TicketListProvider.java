@@ -1,19 +1,20 @@
 package com.kotori316.debug.ticket;
 
-import it.unimi.dsi.fastutil.longs.Long2ObjectFunction;
 import net.minecraft.server.level.DistanceManager;
 import net.minecraft.server.level.Ticket;
-import net.minecraft.util.SortedArraySet;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.TicketStorage;
+
+import java.util.List;
 
 public interface TicketListProvider {
-    Long2ObjectFunction<SortedArraySet<Ticket<?>>> test_utility_getTicket();
+    TicketStorage test_utility_getTicket();
 
-    static Long2ObjectFunction<SortedArraySet<Ticket<?>>> getTicket(DistanceManager manager) {
+    static TicketStorage getTicket(DistanceManager manager) {
         return ((TicketListProvider) manager).test_utility_getTicket();
     }
 
-    static SortedArraySet<Ticket<?>> getTicketForPos(DistanceManager manager, ChunkPos pos) {
-        return getTicket(manager).get(pos.toLong());
+    static List<Ticket> getTicketForPos(DistanceManager manager, ChunkPos pos) {
+        return getTicket(manager).getTickets(pos.toLong());
     }
 }

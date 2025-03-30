@@ -12,7 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.Ticket;
 import net.minecraft.world.level.ChunkPos;
 
-import java.util.Set;
+import java.util.Collection;
 
 public final class CommandTicket {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -34,7 +34,7 @@ public final class CommandTicket {
         return Command.SINGLE_SUCCESS;
     }
 
-    static Component formatTickets(Set<Ticket<?>> tickets) {
+    static Component formatTickets(Collection<Ticket> tickets) {
         return tickets.stream()
             .map(Ticket::toString)
             .map(Component::literal)

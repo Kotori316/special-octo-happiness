@@ -38,8 +38,9 @@ public class CommandGive2 {
         for (ServerPlayer player : players) {
             var stack = item.createItemStack(count, false);
             var slot = player.getInventory().getFreeSlot();
-            if (slot >= 0)
-                player.getInventory().items.set(slot, stack);
+            if (slot >= 0) {
+                player.getInventory().setItem(slot, stack);
+            }
         }
     }
 }
