@@ -1,7 +1,10 @@
 package com.kotori316.testutil.common;
 
 import com.google.common.hash.HashCode;
-import net.minecraft.gametest.framework.TestFunction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.gametest.framework.GameTestAssertPosException;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,5 +28,11 @@ public class TestUtilityCommon {
         if (Boolean.parseBoolean(System.getenv("TEST_UTILITY_LOG_ALL_DATA"))) {
             DATA_GENERATOR_LOGGER.info("Generating {} at {}", hashCode.toString(), path.toAbsolutePath().normalize());
         }
+    }
+
+    public static void throwExceptionAt(GameTestHelper helper, BlockPos relativePos, String message)
+        throws GameTestAssertPosException {
+        var absolutePos = helper.absolutePos(relativePos);
+        throw new GameTestAssertPosException(Component.literal(message), absolutePos, relativePos, (int) helper.getTick());
     }
 }
