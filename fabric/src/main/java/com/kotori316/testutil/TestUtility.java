@@ -6,7 +6,6 @@ import com.kotori316.testutil.common.TestUtilityCommon;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.gametest.framework.FunctionGameTestInstance;
 import net.minecraft.gametest.framework.GameTestInstance;
 import net.minecraft.gametest.framework.TestEnvironmentDefinition;
 import net.minecraft.resources.ResourceKey;
@@ -19,7 +18,7 @@ public class TestUtility implements ModInitializer {
     @Override
     public void onInitialize() {
         TestUtilityCommon.GENERAL.info("Hello Fabric world!");
-        TestFunctionRegister.addFunctionsToRegistry(DebugUtils.MOD_ID);
+        TestFunctionRegister.addFunctionsToRegistry(DebugUtils.MOD_ID, TestFunctionRegister::vanillaTestFunctionRegister);
     }
 
     @SuppressWarnings("unchecked")
@@ -42,9 +41,8 @@ public class TestUtility implements ModInitializer {
         var testEnvironmentDefinitionRegistry = (Registry<TestEnvironmentDefinition>) registryMap.get(Registries.TEST_ENVIRONMENT);
 
         var environment = Registry.registerForHolder(testEnvironmentDefinitionRegistry, TestFunctionRegister.TEST_ENVIRONMENT_KEY, new TestEnvironmentDefinition.AllOf());
-        TestFunctionRegister.forEach((resourceLocation, testFunction) -> {
-            var functionKey = ResourceKey.create(Registries.TEST_FUNCTION, resourceLocation);
-            Registry.register(testInstances, resourceLocation, new FunctionGameTestInstance(functionKey, testFunction.createTestData(environment)));
-        });
+        TestFunctionRegister.forEach((resourceLocation, testFunction) ->
+            Registry.register(testInstances, resourceLocation, testFunction.createTestInstance(environment))
+        );
     }
 }

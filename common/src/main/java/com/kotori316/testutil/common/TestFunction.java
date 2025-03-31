@@ -1,14 +1,10 @@
 package com.kotori316.testutil.common;
 
 import com.google.common.base.CaseFormat;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Holder;
-import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.gametest.framework.GameTestInstance;
-import net.minecraft.gametest.framework.TestData;
-import net.minecraft.gametest.framework.TestEnvironmentDefinition;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.gametest.framework.*;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Consumer;
@@ -86,31 +82,7 @@ public record TestFunction
     }
 
     public GameTestInstance createTestInstance(TestData<Holder<TestEnvironmentDefinition>> testData) {
-        return new TestFunctionGameTestInstance(testData, this);
-    }
-
-    private static class TestFunctionGameTestInstance extends GameTestInstance {
-
-        private final TestFunction testFunction;
-
-        TestFunctionGameTestInstance(TestData<Holder<TestEnvironmentDefinition>> testData, TestFunction testFunction) {
-            super(testData);
-            this.testFunction = testFunction;
-        }
-
-        @Override
-        public void run(GameTestHelper gameTestHelper) {
-            testFunction.test.accept(gameTestHelper);
-        }
-
-        @Override
-        public MapCodec<? extends GameTestInstance> codec() {
-            return MapCodec.unit(this);
-        }
-
-        @Override
-        protected MutableComponent typeDescription() {
-            return Component.literal(testFunction.name.toString());
-        }
+        var functionKey = ResourceKey.create(Registries.TEST_FUNCTION, this.name);
+        return new FunctionGameTestInstance(functionKey, testData);
     }
 }

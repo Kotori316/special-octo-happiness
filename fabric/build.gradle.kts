@@ -13,6 +13,18 @@ loom {
             sourceSet(sourceSets["main"])
         }
     }
+    runs {
+        create("gameTestServer") {
+            configName = "GameTestServer"
+            server()
+            vmArgs(
+                "-ea",
+                "-Dfabric-api.gametest",
+                "-Dfabric-api.gametest.report-file=game_test/test-results/test/game_test.xml"
+            )
+            runDir = "run-server"
+        }
+    }
 }
 
 val commonProject = project.findProject(":common")

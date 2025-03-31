@@ -5,10 +5,12 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public final class TestFunctionRegister {
     public static final ResourceLocation TEST_ENVIRONMENT_KEY = ResourceLocation.fromNamespaceAndPath(DebugUtils.MOD_ID, "test_environment");
@@ -27,11 +29,15 @@ public final class TestFunctionRegister {
         TEST_FUNCTIONS.forEach(consumer);
     }
 
-    public static void addFunctionsToRegistry(String modId) {
+    public static void addFunctionsToRegistry(@Nullable String modId, BiConsumer<ResourceLocation, Consumer<GameTestHelper>> registerFunction) {
         TEST_FUNCTIONS.entrySet().stream()
-            .filter(entry -> entry.getKey().getNamespace().equals(modId))
+            .filter(entry -> modId == null || entry.getKey().getNamespace().equals(modId))
             .forEach(e ->
-                Registry.register(BuiltInRegistries.TEST_FUNCTION, e.getKey(), e.getValue().test())
+                registerFunction.accept(e.getKey(), e.getValue().test())
             );
+    }
+
+    public static void vanillaTestFunctionRegister(ResourceLocation resourceLocation, Consumer<GameTestHelper> test) {
+        Registry.register(BuiltInRegistries.TEST_FUNCTION, resourceLocation, test);
     }
 }
