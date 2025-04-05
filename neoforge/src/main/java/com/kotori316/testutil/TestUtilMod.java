@@ -27,9 +27,9 @@ public final class TestUtilMod {
     }
 
     static void registerTests(RegisterGameTestsEvent event) {
-        var environment = event.registerEnvironment(TestFunctionRegister.TEST_ENVIRONMENT_KEY);
+        var environmentMap = TestFunctionRegister.testEnvironments(event::registerEnvironment);
         TestFunctionRegister.forEach((resourceLocation, testFunction) ->
-            event.registerTest(resourceLocation, testFunction.createTestInstance(environment))
+            event.registerTest(resourceLocation, testFunction.createTestInstance(environmentMap.get(testFunction.environmentName())))
         );
     }
 }

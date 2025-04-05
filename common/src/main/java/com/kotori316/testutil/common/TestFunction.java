@@ -9,16 +9,29 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Consumer;
 
+/**
+ * Don't instantiate this class directly.
+ *
+ * @param environmentName the same meaning as batch name, but for 1.21.5+
+ */
 public record TestFunction
     (
         ResourceLocation name,
         ResourceLocation structureName,
+        ResourceLocation environmentName,
         int maxTicks,
         int setupTicks,
         Consumer<GameTestHelper> test
     ) {
     public static final String EMPTY_STRUCTURE = "empty";
     public static final String NO_PLACE_STRUCTURE = "no_place";
+
+    /**
+     * Use {@code "${modId}:test"} as environment name.
+     */
+    public static TestFunction create(String modId, String name, Consumer<GameTestHelper> test) {
+        return create(modId, modId + ":test", name, test);
+    }
 
     public static TestFunction create(String modID, String batch, String name, Consumer<GameTestHelper> test) {
         return createWithStructure(modID, batch, name, EMPTY_STRUCTURE, test);
@@ -54,23 +67,25 @@ public record TestFunction
     private static TestFunction createInternal(String modID, String batch, String testName, String structureName, Consumer<GameTestHelper> wrapped) {
         var snakeTestName = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, testName);
         var structureLocation = ResourceLocation.parse(structureName);
-        return new TestFunction(
+        return TestFunction.createRaw(
             ResourceLocation.fromNamespaceAndPath(modID, snakeTestName),
             structureLocation,
+            ResourceLocation.parse(batch),
             100,
             1,
             wrapped
         );
     }
 
-    public TestFunction(String modId, String name, Consumer<GameTestHelper> test) {
-        this(
-            ResourceLocation.fromNamespaceAndPath(modId, name),
-            ResourceLocation.parse("minecraft:empty"),
-            100,
-            1,
-            test
-        );
+    public static TestFunction createRaw(
+        ResourceLocation name,
+        ResourceLocation structureName,
+        ResourceLocation environmentName,
+        int maxTicks,
+        int setupTicks,
+        Consumer<GameTestHelper> test
+    ) {
+        return new TestFunction(name, structureName, environmentName, maxTicks, setupTicks, test);
     }
 
     public TestData<Holder<TestEnvironmentDefinition>> createTestData(Holder<TestEnvironmentDefinition> definition) {
