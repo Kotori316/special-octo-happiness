@@ -4,5 +4,14 @@
     "github>Kotori316/common-script:renovate-default"
   ],
   "packageRules": [
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "^net.neoforged.gradle.userdev"
+      ],
+      "enabled": false
+    }
   ]
 }
