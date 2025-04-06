@@ -15,6 +15,7 @@ fun artifactName(): String {
 
 fun pfVersion(platform: String): String {
     return when (platform) {
+        "common" -> mc
         "forge" -> project.property("forge_version").toString()
         "fabric" -> project.property("fabric_version").toString()
         "neoforge" -> project.property("neo_version").toString()
