@@ -4,9 +4,12 @@ import com.kotori316.testutil.common.TestFunctionRegister;
 import com.kotori316.testutil.common.TestUtilityCommon;
 import com.kotori316.testutil.common.reporter.ReporterRegister;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.gametest.framework.StructureUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.RegisterGameTestsEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
+
+import java.nio.file.Path;
 
 public final class TestUtilMod {
     public static void register(IEventBus modBus) {
@@ -18,6 +21,7 @@ public final class TestUtilMod {
     static void changeReporter(RegisterGameTestsEvent event) {
         ReporterRegister.changeReporter();
         TestUtilityCommon.GENERAL.info("Inject CreateFileReporter by {}", TestUtilityCommon.MOD_ID);
+        StructureUtils.testStructuresDir = Path.of("gameteststructures");
     }
 
     static void registerTestFunctions(RegisterEvent event) {

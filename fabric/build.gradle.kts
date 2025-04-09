@@ -62,3 +62,10 @@ tasks.withType<JavaCompile> {
 tasks.named("compileJava", JavaCompile::class) {
     dependsOn("processResources")
 }
+
+afterEvaluate {
+    println(tasks.jar.get().archiveFile.get())
+    println(tasks.remapJar.get().archiveFile.get())
+    println(publishing.publications)
+    println(components["java"])
+}
