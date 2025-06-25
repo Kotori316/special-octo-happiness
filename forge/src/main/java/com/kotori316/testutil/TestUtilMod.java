@@ -10,7 +10,6 @@ import net.minecraft.gametest.framework.GameTestInstance;
 import net.minecraft.gametest.framework.GameTestServer;
 import net.minecraft.gametest.framework.TestEnvironmentDefinition;
 import net.minecraft.resources.ResourceKey;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegisterEvent;
@@ -18,9 +17,8 @@ import net.minecraftforge.registries.RegisterEvent;
 public final class TestUtilMod {
 
     public static void register(FMLJavaModLoadingContext context) {
-        // context.getModEventBus().addListener(TestUtilMod::changeReporter);
-        context.getModEventBus().addListener(TestUtilMod::registerTestFunctions);
-        MinecraftForge.EVENT_BUS.addListener(TestUtilMod::handleServerStartToRegisterTests);
+        RegisterEvent.getBus(context.getModBusGroup()).addListener(TestUtilMod::registerTestFunctions);
+        ServerStartingEvent.BUS.addListener(TestUtilMod::handleServerStartToRegisterTests);
     }
 
     static void changeReporter() {
