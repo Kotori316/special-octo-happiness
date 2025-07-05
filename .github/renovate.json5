@@ -3,6 +3,10 @@
   "extends": [
     "github>Kotori316/common-script:renovate-default"
   ],
+  "baseBranches": [
+    "1.21",
+    "$default"
+  ],
   "packageRules": [
     {
       "matchManagers": [
