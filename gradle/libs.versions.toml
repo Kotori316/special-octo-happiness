@@ -1,5 +1,5 @@
 [versions]
-gradle_cf = "3.3"
+gradle_cf = "3.4"
 gradle_neoforge = "7.0.178"
 
 [plugins]
