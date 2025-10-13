@@ -13,8 +13,6 @@ plugins {
 val modId = "debug_util"
 
 minecraft {
-    val mappingVersion =
-        "${project.property("parchment_minecraft")}-${project.property("parchment_mapping")}-${project.property("minecraft")}"
     mappings(
         mapOf(
             "channel" to "official",

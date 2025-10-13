@@ -10,7 +10,6 @@ import net.minecraft.server.Bootstrap;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.pathfinder.PathType;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.loading.FMLLoader;
@@ -103,13 +102,7 @@ public final class MCTestInitializer implements BeforeAllCallback {
     }
 
     private static void changeDist() {
-        try {
-            Field dist = FMLLoader.class.getDeclaredField("dist");
-            dist.setAccessible(true);
-            dist.set(null, Dist.CLIENT);
-        } catch (Exception e) {
-            fail(e);
-        }
+
     }
 
     private static void setHandler() {

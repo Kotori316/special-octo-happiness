@@ -1,5 +1,6 @@
 package com.kotori316.debug.neoforge;
 
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ final class DebugUtilsNeoForgeTest {
         var constructors = clazz.getConstructors();
         assertEquals(1, constructors.length);
         var first = constructors[0];
-        Class<?>[] expected = {IEventBus.class};
+        Class<?>[] expected = {IEventBus.class, Dist.class};
         assertArrayEquals(expected, first.getParameterTypes());
     }
 }

@@ -30,7 +30,7 @@ class MCTestInitializerTest {
 
     @Test
     void accessCapability() {
-        assertNotNull(Capabilities.EnergyStorage.BLOCK);
+        assertNotNull(Capabilities.Energy.BLOCK);
     }
 
     @Nested
@@ -51,7 +51,7 @@ class MCTestInitializerTest {
         }
 
         private static Dist getDist() {
-            return FMLEnvironment.dist;
+            return FMLEnvironment.getDist();
         }
     }
 }

@@ -6,10 +6,10 @@ import com.kotori316.debug.ServerSetting;
 import com.kotori316.debug.command.CommandRegister;
 import com.kotori316.testutil.TestUtilMod;
 import net.minecraft.world.level.Level;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
-import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -17,8 +17,8 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 @Mod(DebugUtils.MOD_ID)
 public class DebugUtilsNeoForge {
 
-    public DebugUtilsNeoForge(IEventBus modBus) {
-        if (FMLLoader.getDist().isClient()) {
+    public DebugUtilsNeoForge(IEventBus modBus, Dist dist) {
+        if (dist.isClient()) {
             modBus.addListener(this::loadComplete);
         }
         var forgeBus = NeoForge.EVENT_BUS;
