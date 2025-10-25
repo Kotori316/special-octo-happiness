@@ -29,11 +29,11 @@ public record TestFunction
     /**
      * Use {@code "${modId}:test"} as environment name.
      */
-    public static TestFunction create(String modId, String name, Consumer<GameTestHelper> test) {
+    public static TestFunction create(String modId, String name, TestFunctionConsumer test) {
         return create(modId, modId + ":test", name, test);
     }
 
-    public static TestFunction create(String modID, String batch, String name, Consumer<GameTestHelper> test) {
+    public static TestFunction create(String modID, String batch, String name, TestFunctionConsumer test) {
         return createWithStructure(modID, batch, name, EMPTY_STRUCTURE, test);
     }
 
@@ -41,7 +41,7 @@ public record TestFunction
         return createWithStructure(modID, batch, name, NO_PLACE_STRUCTURE, test);
     }
 
-    public static TestFunction createWithStructure(String modID, String batch, String testName, String structureName, Consumer<GameTestHelper> test) {
+    public static TestFunction createWithStructure(String modID, String batch, String testName, String structureName, TestFunctionConsumer test) {
         return createInternal(modID, batch, testName, structureName, wrapper(testName, test));
     }
 
@@ -52,10 +52,15 @@ public record TestFunction
         }));
     }
 
-    private static Consumer<GameTestHelper> wrapper(String testName, Consumer<GameTestHelper> original) {
+    private static Consumer<GameTestHelper> wrapper(String testName, TestFunctionConsumer original) {
         return g -> {
             try {
-                original.accept(g);
+                original.run(g);
+            } catch (ReflectiveOperationException reflectiveOperationException) {
+                var target = reflectiveOperationException.getCause() != null ? reflectiveOperationException.getCause() : reflectiveOperationException;
+                TestFunctionException e = new TestFunctionException(testName, target.getMessage());
+                e.addSuppressed(target);
+                throw e;
             } catch (AssertionError assertionError) {
                 var e = new TestFunctionException(testName, assertionError.getMessage());
                 e.addSuppressed(assertionError);
@@ -99,5 +104,18 @@ public record TestFunction
     public GameTestInstance createTestInstance(TestData<Holder<TestEnvironmentDefinition>> testData) {
         var functionKey = ResourceKey.create(Registries.TEST_FUNCTION, this.name);
         return new FunctionGameTestInstance(functionKey, testData);
+    }
+
+    public interface TestFunctionConsumer extends Consumer<GameTestHelper> {
+        void run(GameTestHelper gameTestHelper) throws ReflectiveOperationException;
+
+        @Override
+        default void accept(GameTestHelper gameTestHelper) {
+            try {
+                this.run(gameTestHelper);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
