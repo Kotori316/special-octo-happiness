@@ -42,22 +42,22 @@ public record TestFunction
     }
 
     public static TestFunction createWithStructure(String modID, String batch, String testName, String structureName, Consumer<GameTestHelper> test) {
-        return createInternal(modID, batch, testName, structureName, wrapper(test));
+        return createInternal(modID, batch, testName, structureName, wrapper(testName, test));
     }
 
     public static TestFunction createWithStructure(String modID, String batch, String testName, String structureName, Runnable test) {
-        return createInternal(modID, batch, testName, structureName, wrapper(g -> {
+        return createInternal(modID, batch, testName, structureName, wrapper(testName, g -> {
             test.run();
             g.succeed();
         }));
     }
 
-    private static Consumer<GameTestHelper> wrapper(Consumer<GameTestHelper> original) {
+    private static Consumer<GameTestHelper> wrapper(String testName, Consumer<GameTestHelper> original) {
         return g -> {
             try {
                 original.accept(g);
             } catch (AssertionError assertionError) {
-                var e = new RuntimeException(assertionError.getMessage());
+                var e = new TestFunctionException(testName, assertionError.getMessage());
                 e.addSuppressed(assertionError);
                 throw e;
             }
