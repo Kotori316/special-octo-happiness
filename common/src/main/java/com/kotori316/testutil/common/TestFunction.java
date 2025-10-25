@@ -29,11 +29,11 @@ public record TestFunction
     /**
      * Use {@code "${modId}:test"} as environment name.
      */
-    public static TestFunction create(String modId, String name, TestFunctionConsumer test) {
+    public static TestFunction create(String modId, String name, Consumer<GameTestHelper> test) {
         return create(modId, modId + ":test", name, test);
     }
 
-    public static TestFunction create(String modID, String batch, String name, TestFunctionConsumer test) {
+    public static TestFunction create(String modID, String batch, String name, Consumer<GameTestHelper> test) {
         return createWithStructure(modID, batch, name, EMPTY_STRUCTURE, test);
     }
 
@@ -41,7 +41,7 @@ public record TestFunction
         return createWithStructure(modID, batch, name, NO_PLACE_STRUCTURE, test);
     }
 
-    public static TestFunction createWithStructure(String modID, String batch, String testName, String structureName, TestFunctionConsumer test) {
+    public static TestFunction createWithStructure(String modID, String batch, String testName, String structureName, Consumer<GameTestHelper> test) {
         return createInternal(modID, batch, testName, structureName, wrapper(testName, test));
     }
 
@@ -52,10 +52,11 @@ public record TestFunction
         }));
     }
 
-    private static Consumer<GameTestHelper> wrapper(String testName, TestFunctionConsumer original) {
+    private static Consumer<GameTestHelper> wrapper(String testName, Consumer<GameTestHelper> original) {
         return g -> {
             try {
-                original.run(g);
+                TestFunctionConsumer c = original::accept;
+                c.run(g);
             } catch (ReflectiveOperationException reflectiveOperationException) {
                 var target = reflectiveOperationException.getCause() != null ? reflectiveOperationException.getCause() : reflectiveOperationException;
                 TestFunctionException e = new TestFunctionException(testName, target.getMessage());
@@ -106,7 +107,7 @@ public record TestFunction
         return new FunctionGameTestInstance(functionKey, testData);
     }
 
-    public interface TestFunctionConsumer extends Consumer<GameTestHelper> {
+    private interface TestFunctionConsumer extends Consumer<GameTestHelper> {
         void run(GameTestHelper gameTestHelper) throws ReflectiveOperationException;
 
         @Override
