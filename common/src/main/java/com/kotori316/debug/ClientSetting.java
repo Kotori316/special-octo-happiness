@@ -3,6 +3,7 @@ package com.kotori316.debug;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.AttackIndicatorStatus;
 import net.minecraft.client.CloudStatus;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundSource;
 
@@ -21,6 +22,7 @@ public class ClientSetting {
             settings.advancedItemTooltips = true;
             settings.keySprint.setKey(InputConstants.getKey("key.keyboard.q"));
             settings.keyDrop.setKey(InputConstants.getKey("key.keyboard.right.bracket"));
+            KeyMapping.resetMapping();
 
             settings.getSoundSourceOptionInstance(SoundSource.MASTER).set(0.25);
             settings.getSoundSourceOptionInstance(SoundSource.MUSIC).set(0.125);

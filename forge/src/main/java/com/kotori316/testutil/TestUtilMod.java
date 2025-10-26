@@ -32,6 +32,7 @@ public final class TestUtilMod {
         );
     }
 
+    @SuppressWarnings("deprecation")
     static void handleServerStartToRegisterTests(ServerStartingEvent event) {
         var server = event.getServer();
         if (server instanceof GameTestServer) {

@@ -52,7 +52,6 @@ public final class TestFunctionRegister {
         return TEST_FUNCTIONS.values().stream()
             .map(TestFunction::environmentName)
             .distinct()
-            .map(name -> Map.entry(name, registerFunction.apply(name)))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            .collect(Collectors.toMap(Function.identity(), registerFunction));
     }
 }
