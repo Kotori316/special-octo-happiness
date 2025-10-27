@@ -29,20 +29,24 @@ val pfName = project.name.split("-")[0]
 publishing {
     publications {
         if (!releaseDebug) {
+            // Production
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
                 artifactId = "${artifactName()}-${pfName}"
+                version = project.property("version").toString()
                 pom {
                     description = project.provider { project.ext.get("generalDescription") as String }
                 }
             }
-        }
-        create<MavenPublication>("mavenLatest") {
-            from(components["java"])
-            artifactId = "${artifactName()}-${pfName}"
-            version = project.property("maven_latest").toString()
-            pom {
-                description = project.provider { project.ext.get("generalDescription") as String }
+        } else {
+            // Snapshot
+            create<MavenPublication>("mavenLatest") {
+                from(components["java"])
+                artifactId = "${artifactName()}-${pfName}"
+                version = project.property("maven_latest").toString()
+                pom {
+                    description = project.provider { project.ext.get("generalDescription") as String }
+                }
             }
         }
     }
@@ -52,7 +56,7 @@ publishing {
         val p = project.findProperty("maven_password") as? String ?: System.getenv("MAVEN_PASSWORD") ?: ""
         if (u != "" && p != "") {
             maven {
-                name = "kotori316-maven"
+                name = "main"
                 // For users: Use https://maven.kotori316.com to get artifacts
                 url = uri("https://maven2.kotori316.com/production/maven")
                 credentials {
