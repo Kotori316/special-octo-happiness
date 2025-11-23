@@ -4,7 +4,7 @@ plugins {
     id("com.kotori316.common.java")
     id("com.kotori316.common.publish")
     // id("com.kotori316.common.signing")
-    id("fabric-loom").version("1.13.4")
+    id("fabric-loom").version("1.13.6")
 }
 
 loom {
