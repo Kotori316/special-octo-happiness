@@ -2,7 +2,7 @@ plugins {
     java
     id("com.kotori316.common.java")
     id("com.kotori316.common.publish")
-    id("org.spongepowered.gradle.vanilla") version ("0.2.1")
+    id("org.spongepowered.gradle.vanilla") version ("0.2.2")
 }
 
 val mc: String = project.property("minecraft").toString()
