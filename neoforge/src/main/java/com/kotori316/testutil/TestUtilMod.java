@@ -15,6 +15,7 @@ public final class TestUtilMod {
     private static final String NO_REGISTRATION_KEY = "TEST_UTILITY_NO_REGISTRATION";
 
     public static void register(IEventBus modBus) {
+        TestUtilityCommon.GENERAL.info("Init TestUtilMod. Loader: {}", TestUtilMod.class.getClassLoader());
         modBus.addListener(TestUtilMod::changeReporter);
         if (Boolean.parseBoolean(System.getenv(NO_REGISTRATION_KEY))) {
             TestUtilityCommon.GENERAL.info("Test registration from {} is disabled", TestUtilityCommon.MOD_ID);
