@@ -5,11 +5,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestAssertPosException;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.chat.Component;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Method;
 import java.nio.file.Path;
 
 public class TestUtilityCommon {
@@ -18,9 +16,9 @@ public class TestUtilityCommon {
     public static final Logger DATA_GENERATOR_LOGGER = LoggerFactory.getLogger("TestUtil/DataGen");
     public static final Logger TEST_LOADER_LOGGER = LoggerFactory.getLogger("TestUtil/TestLoad");
 
-    public static void logTestName(Object maybeTest, @Nullable Method createFrom) {
+    public static void logTestName(TestFunction testFunction) {
         if (Boolean.parseBoolean(System.getenv("TEST_UTILITY_LOG_ALL_TEST"))) {
-            TEST_LOADER_LOGGER.info("{} is loaded.", maybeTest);
+            TEST_LOADER_LOGGER.info("Register {}(batch: {}, structure: {})", testFunction.name(), testFunction.environmentName(), testFunction.structureName());
         }
     }
 

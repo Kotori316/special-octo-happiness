@@ -27,7 +27,7 @@ public final class TestFunctionRegister {
     }
 
     public static synchronized void registerTestFunction(TestFunction testFunction) {
-        TestUtilityCommon.TEST_LOADER_LOGGER.info("Register {}(batch: {}, structure: {})", testFunction.name(), testFunction.environmentName(), testFunction.structureName());
+        TestUtilityCommon.logTestName(testFunction);
         TEST_FUNCTIONS.put(testFunction.name(), testFunction);
     }
 
