@@ -12,10 +12,17 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 import java.nio.file.Path;
 
 public final class TestUtilMod {
+    private static final String NO_REGISTRATION_KEY = "TEST_UTILITY_NO_REGISTRATION";
+
     public static void register(IEventBus modBus) {
         modBus.addListener(TestUtilMod::changeReporter);
-        modBus.addListener(TestUtilMod::registerTests);
-        modBus.addListener(TestUtilMod::registerTestFunctions);
+        if (Boolean.parseBoolean(System.getenv(NO_REGISTRATION_KEY))) {
+            TestUtilityCommon.GENERAL.info("Test registration from {} is disabled", TestUtilityCommon.MOD_ID);
+        } else {
+            TestUtilityCommon.GENERAL.info("Test registration from {} is enabled", TestUtilityCommon.MOD_ID);
+            modBus.addListener(TestUtilMod::registerTests);
+            modBus.addListener(TestUtilMod::registerTestFunctions);
+        }
     }
 
     static void changeReporter(RegisterGameTestsEvent event) {

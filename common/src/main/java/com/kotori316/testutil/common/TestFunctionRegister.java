@@ -31,7 +31,6 @@ public final class TestFunctionRegister {
         TEST_FUNCTIONS.put(testFunction.name(), testFunction);
     }
 
-    @ApiStatus.Internal
     public static synchronized void forEach(BiConsumer<ResourceLocation, TestFunction> consumer, Consumer<Map<ResourceLocation, TestFunction>> logger) {
         TEST_FUNCTIONS.forEach(consumer);
         logger.accept(Collections.unmodifiableMap(TEST_FUNCTIONS));
@@ -53,11 +52,11 @@ public final class TestFunctionRegister {
         TestUtilityCommon.TEST_LOADER_LOGGER.info("Finished registering {} test functions for {}", TEST_FUNCTIONS.size(), modId);
     }
 
+    @ApiStatus.Internal
     public static void vanillaTestFunctionRegister(ResourceLocation resourceLocation, Consumer<GameTestHelper> test) {
         Registry.register(BuiltInRegistries.TEST_FUNCTION, resourceLocation, test);
     }
 
-    @ApiStatus.Internal
     public static synchronized Map<ResourceLocation, Holder<TestEnvironmentDefinition>> testEnvironments(Function<ResourceLocation, Holder<TestEnvironmentDefinition>> registerFunction) {
         TestUtilityCommon.TEST_LOADER_LOGGER.info("Registering test environments");
         return TEST_FUNCTIONS.values().stream()
