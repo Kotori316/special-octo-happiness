@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -25,22 +26,31 @@ public final class TestFunctionRegister {
         registerTestFunction(TestFunction.create(DebugUtils.MOD_ID, "dummy_test", GameTestHelper::succeed));
     }
 
-    public static void registerTestFunction(TestFunction testFunction) {
+    public static synchronized void registerTestFunction(TestFunction testFunction) {
         TestUtilityCommon.TEST_LOADER_LOGGER.info("Register {}(batch: {}, structure: {})", testFunction.name(), testFunction.environmentName(), testFunction.structureName());
         TEST_FUNCTIONS.put(testFunction.name(), testFunction);
     }
 
     @ApiStatus.Internal
-    public static void forEach(BiConsumer<ResourceLocation, TestFunction> consumer) {
+    public static synchronized void forEach(BiConsumer<ResourceLocation, TestFunction> consumer, Consumer<Map<ResourceLocation, TestFunction>> logger) {
         TEST_FUNCTIONS.forEach(consumer);
+        logger.accept(Collections.unmodifiableMap(TEST_FUNCTIONS));
     }
 
-    public static void addFunctionsToRegistry(@Nullable String modId, BiConsumer<ResourceLocation, Consumer<GameTestHelper>> registerFunction) {
+    @ApiStatus.Internal
+    public static synchronized void forEach(BiConsumer<ResourceLocation, TestFunction> consumer) {
+        forEach(consumer, m -> {
+        });
+    }
+
+    public static synchronized void addFunctionsToRegistry(@Nullable String modId, BiConsumer<ResourceLocation, Consumer<GameTestHelper>> registerFunction) {
+        TestUtilityCommon.TEST_LOADER_LOGGER.info("Registering test functions for {}", modId);
         TEST_FUNCTIONS.entrySet().stream()
             .filter(entry -> modId == null || entry.getKey().getNamespace().equals(modId))
             .forEach(e ->
                 registerFunction.accept(e.getKey(), e.getValue().test())
             );
+        TestUtilityCommon.TEST_LOADER_LOGGER.info("Finished registering {} test functions for {}", TEST_FUNCTIONS.size(), modId);
     }
 
     public static void vanillaTestFunctionRegister(ResourceLocation resourceLocation, Consumer<GameTestHelper> test) {
@@ -48,7 +58,8 @@ public final class TestFunctionRegister {
     }
 
     @ApiStatus.Internal
-    public static Map<ResourceLocation, Holder<TestEnvironmentDefinition>> testEnvironments(Function<ResourceLocation, Holder<TestEnvironmentDefinition>> registerFunction) {
+    public static synchronized Map<ResourceLocation, Holder<TestEnvironmentDefinition>> testEnvironments(Function<ResourceLocation, Holder<TestEnvironmentDefinition>> registerFunction) {
+        TestUtilityCommon.TEST_LOADER_LOGGER.info("Registering test environments");
         return TEST_FUNCTIONS.values().stream()
             .map(TestFunction::environmentName)
             .distinct()

@@ -33,7 +33,8 @@ public final class TestUtilMod {
     static void registerTests(RegisterGameTestsEvent event) {
         var environmentMap = TestFunctionRegister.testEnvironments(event::registerEnvironment);
         TestFunctionRegister.forEach((resourceLocation, testFunction) ->
-            event.registerTest(resourceLocation, testFunction.createTestInstance(environmentMap.get(testFunction.environmentName())))
+                event.registerTest(resourceLocation, testFunction.createTestInstance(environmentMap.get(testFunction.environmentName()))),
+            map -> TestUtilityCommon.TEST_LOADER_LOGGER.info("Registered {} tests for {}", map.size(), TestUtilityCommon.MOD_ID)
         );
     }
 }
