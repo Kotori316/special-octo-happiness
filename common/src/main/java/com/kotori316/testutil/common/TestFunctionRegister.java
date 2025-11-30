@@ -31,15 +31,13 @@ public final class TestFunctionRegister {
         TEST_FUNCTIONS.put(testFunction.name(), testFunction);
     }
 
-    public static synchronized void forEach(BiConsumer<ResourceLocation, TestFunction> consumer, Consumer<Map<ResourceLocation, TestFunction>> logger) {
-        TEST_FUNCTIONS.forEach(consumer);
-        logger.accept(Collections.unmodifiableMap(TEST_FUNCTIONS));
+    public static synchronized Map<ResourceLocation, TestFunction> getTestFunctions() {
+        return Collections.unmodifiableMap(TEST_FUNCTIONS);
     }
 
     @ApiStatus.Internal
     public static synchronized void forEach(BiConsumer<ResourceLocation, TestFunction> consumer) {
-        forEach(consumer, m -> {
-        });
+        TEST_FUNCTIONS.forEach(consumer);
     }
 
     public static synchronized void addFunctionsToRegistry(@Nullable String modId, BiConsumer<ResourceLocation, Consumer<GameTestHelper>> registerFunction) {
