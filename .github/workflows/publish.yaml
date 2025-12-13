@@ -72,7 +72,7 @@ jobs:
           MAVEN_PASSWORD: ${{steps.get-secrets.outputs.repolisite-publisher-password}}
       - name: Upload Local Maven
         if: ${{ !cancelled() && !inputs.RELEASE_DEBUG }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: special-octo-happiness-Maven-${{ github.run_number }}
           retention-days: 1
