@@ -10,24 +10,24 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gamerules.GameRules;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
 public class ServerSetting {
     public static void onLogin(MinecraftServer server, @Nullable Player player, boolean force) {
-        var gameRule = server.getGameRules();
-        if (!force && !gameRule.getBoolean(GameRules.RULE_DAYLIGHT)) return;
+        var gameRule = server.overworld().getGameRules();
+        if (!force && !gameRule.get(GameRules.ADVANCE_TIME)) return;
 
-        gameRule.getRule(GameRules.RULE_DAYLIGHT).set(false, server);
-        gameRule.getRule(GameRules.RULE_WEATHER_CYCLE).set(false, server);
-        gameRule.getRule(GameRules.RULE_KEEPINVENTORY).set(true, server);
-        gameRule.getRule(GameRules.RULE_FIRE_DAMAGE).set(false, server);
-        gameRule.getRule(GameRules.RULE_FALL_DAMAGE).set(false, server);
-        gameRule.getRule(GameRules.RULE_DROWNING_DAMAGE).set(false, server);
-        gameRule.getRule(GameRules.RULE_DO_WARDEN_SPAWNING).set(false, server);
+        gameRule.set(GameRules.ADVANCE_TIME, false, server);
+        gameRule.set(GameRules.ADVANCE_WEATHER, false, server);
+        gameRule.set(GameRules.KEEP_INVENTORY, true, server);
+        gameRule.set(GameRules.FIRE_DAMAGE, false, server);
+        gameRule.set(GameRules.FALL_DAMAGE, false, server);
+        gameRule.set(GameRules.DROWNING_DAMAGE, false, server);
+        gameRule.set(GameRules.SPAWN_WARDENS, false, server);
 
         server.getAllLevels().forEach(s -> {
             s.setWeatherParameters(0, 0, false, false);
