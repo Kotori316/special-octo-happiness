@@ -2,7 +2,7 @@ name: Build
 on:
   push:
     branches:
-      - '1.21.2'
+      - '1.21.11'
   pull_request:
 
 jobs:
