@@ -13,7 +13,7 @@ public class CommandToggleMode {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         var command =
             Commands.literal("toggle")
-                .requires(source -> source.hasPermission(2))
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .executes(c -> {
                     var player = c.getSource().getPlayerOrException();
                     if (player.isCreative()) {

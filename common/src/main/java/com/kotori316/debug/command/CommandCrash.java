@@ -10,7 +10,7 @@ public class CommandCrash {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         var command =
             Commands.literal("crash")
-                .requires(source -> source.hasPermission(2))
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .executes(c -> {
                     throw new CrashException();
                 });

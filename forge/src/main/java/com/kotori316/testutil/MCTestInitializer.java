@@ -6,7 +6,7 @@ import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.Bootstrap;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.material.Fluid;
@@ -146,7 +146,7 @@ public final class MCTestInitializer implements BeforeAllCallback {
     @SuppressWarnings("unchecked")
     private static void mockCapability() {
         try {
-            var method = CapabilityManager.class.getDeclaredMethod("get", String.class, ResourceLocation.class, boolean.class);
+            var method = CapabilityManager.class.getDeclaredMethod("get", String.class, Identifier.class, boolean.class);
             method.setAccessible(true);
             var cap_IEnergyStorage = (Capability<IEnergyStorage>) method.invoke(null, "IEnergyStorage", null, false);
             var cap_IFluidHandler = (Capability<IFluidHandler>) method.invoke(null, "IFluidHandler", null, false);

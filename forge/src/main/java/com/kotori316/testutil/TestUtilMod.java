@@ -46,8 +46,8 @@ public final class TestUtilMod {
         tests.unfreeze();
 
         var testEnvironmentMap = TestFunctionRegister.testEnvironments(r -> environments.register(ResourceKey.create(Registries.TEST_ENVIRONMENT, r), new TestEnvironmentDefinition.AllOf(), RegistrationInfo.BUILT_IN));
-        TestFunctionRegister.forEach((resourceLocation, testFunction) ->
-            tests.register(ResourceKey.create(Registries.TEST_INSTANCE, resourceLocation), testFunction.createTestInstance(testEnvironmentMap.get(testFunction.environmentName())), RegistrationInfo.BUILT_IN)
+        TestFunctionRegister.forEach((Identifier, testFunction) ->
+            tests.register(ResourceKey.create(Registries.TEST_INSTANCE, Identifier), testFunction.createTestInstance(testEnvironmentMap.get(testFunction.environmentName())), RegistrationInfo.BUILT_IN)
         );
         environments.freeze();
         tests.freeze();

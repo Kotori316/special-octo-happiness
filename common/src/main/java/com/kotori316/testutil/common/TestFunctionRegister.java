@@ -6,7 +6,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestEnvironmentDefinition;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,7 +19,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public final class TestFunctionRegister {
-    private static final Map<ResourceLocation, TestFunction> TEST_FUNCTIONS;
+    private static final Map<Identifier, TestFunction> TEST_FUNCTIONS;
 
     static {
         TEST_FUNCTIONS = new HashMap<>();
@@ -31,16 +31,16 @@ public final class TestFunctionRegister {
         TEST_FUNCTIONS.put(testFunction.name(), testFunction);
     }
 
-    public static synchronized Map<ResourceLocation, TestFunction> getTestFunctions() {
+    public static synchronized Map<Identifier, TestFunction> getTestFunctions() {
         return Collections.unmodifiableMap(TEST_FUNCTIONS);
     }
 
     @ApiStatus.Internal
-    public static synchronized void forEach(BiConsumer<ResourceLocation, TestFunction> consumer) {
+    public static synchronized void forEach(BiConsumer<Identifier, TestFunction> consumer) {
         TEST_FUNCTIONS.forEach(consumer);
     }
 
-    public static synchronized void addFunctionsToRegistry(@Nullable String modId, BiConsumer<ResourceLocation, Consumer<GameTestHelper>> registerFunction) {
+    public static synchronized void addFunctionsToRegistry(@Nullable String modId, BiConsumer<Identifier, Consumer<GameTestHelper>> registerFunction) {
         TestUtilityCommon.TEST_LOADER_LOGGER.info("Registering test functions for {}", modId);
         TEST_FUNCTIONS.entrySet().stream()
             .filter(entry -> modId == null || entry.getKey().getNamespace().equals(modId))
@@ -51,11 +51,11 @@ public final class TestFunctionRegister {
     }
 
     @ApiStatus.Internal
-    public static void vanillaTestFunctionRegister(ResourceLocation resourceLocation, Consumer<GameTestHelper> test) {
-        Registry.register(BuiltInRegistries.TEST_FUNCTION, resourceLocation, test);
+    public static void vanillaTestFunctionRegister(Identifier Identifier, Consumer<GameTestHelper> test) {
+        Registry.register(BuiltInRegistries.TEST_FUNCTION, Identifier, test);
     }
 
-    public static synchronized Map<ResourceLocation, Holder<TestEnvironmentDefinition>> testEnvironments(Function<ResourceLocation, Holder<TestEnvironmentDefinition>> registerFunction) {
+    public static synchronized Map<Identifier, Holder<TestEnvironmentDefinition>> testEnvironments(Function<Identifier, Holder<TestEnvironmentDefinition>> registerFunction) {
         TestUtilityCommon.TEST_LOADER_LOGGER.info("Registering test environments");
         return TEST_FUNCTIONS.values().stream()
             .map(TestFunction::environmentName)

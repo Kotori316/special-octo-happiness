@@ -19,7 +19,7 @@ public class CommandSetStone {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         var command =
             Commands.literal("setstone")
-                .requires(source -> source.hasPermission(2))
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .executes(c -> setStone(c, BlockPos.containing(c.getSource().getPosition()).below()))
                 .then(Commands.argument("pos", BlockPosArgument.blockPos())
                     .executes(c -> setStone(c, BlockPosArgument.getLoadedBlockPos(c, "pos"))));

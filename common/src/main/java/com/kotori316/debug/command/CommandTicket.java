@@ -16,8 +16,12 @@ import java.util.Collection;
 
 public final class CommandTicket {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        var checkTicketCommand = Commands.literal("checkTicket").executes(c -> checkTicket(c, BlockPos.containing(c.getSource().getPosition())))
-            .then(Commands.argument("pos", BlockPosArgument.blockPos()).executes(c -> checkTicket(c, BlockPosArgument.getBlockPos(c, "pos"))));
+        var checkTicketCommand = Commands.literal("checkTicket")
+            .requires(Commands.hasPermission(Commands.LEVEL_MODERATORS))
+            .executes(c -> checkTicket(c, BlockPos.containing(c.getSource().getPosition())))
+            .then(Commands.argument("pos", BlockPosArgument.blockPos())
+                .executes(c -> checkTicket(c, BlockPosArgument.getBlockPos(c, "pos")))
+            );
         dispatcher.register(checkTicketCommand);
     }
 

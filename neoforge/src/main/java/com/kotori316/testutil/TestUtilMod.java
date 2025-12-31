@@ -56,8 +56,8 @@ public final class TestUtilMod {
         @Override
         public void accept(RegisterGameTestsEvent event) {
             var environmentMap = TestFunctionRegister.testEnvironments(event::registerEnvironment);
-            TestFunctionRegister.forEach((resourceLocation, testFunction) ->
-                event.registerTest(resourceLocation, testFunction.createTestInstance(environmentMap.get(testFunction.environmentName())))
+            TestFunctionRegister.forEach((Identifier, testFunction) ->
+                event.registerTest(Identifier, testFunction.createTestInstance(environmentMap.get(testFunction.environmentName())))
             );
             TestUtilityCommon.TEST_LOADER_LOGGER.info("Registered {} tests for {}", TestFunctionRegister.getTestFunctions().size(), TestUtilityCommon.MOD_ID);
         }

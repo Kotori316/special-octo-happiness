@@ -29,7 +29,7 @@ public class CommandGive2 {
                         })));
         var command =
             Commands.literal("give2")
-                .requires(source -> source.hasPermission(2))
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .then(giveToPlayer);
         dispatcher.register(command);
     }

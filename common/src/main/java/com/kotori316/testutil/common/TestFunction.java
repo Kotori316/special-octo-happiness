@@ -5,7 +5,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.Consumer;
 
@@ -16,9 +16,9 @@ import java.util.function.Consumer;
  */
 public record TestFunction
     (
-        ResourceLocation name,
-        ResourceLocation structureName,
-        ResourceLocation environmentName,
+        Identifier name,
+        Identifier structureName,
+        Identifier environmentName,
         int maxTicks,
         int setupTicks,
         Consumer<GameTestHelper> test
@@ -72,11 +72,11 @@ public record TestFunction
 
     private static TestFunction createInternal(String modID, String batch, String testName, String structureName, Consumer<GameTestHelper> wrapped) {
         var snakeTestName = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, testName);
-        var structureLocation = ResourceLocation.parse(structureName);
+        var structureLocation = Identifier.parse(structureName);
         return TestFunction.createRaw(
-            ResourceLocation.fromNamespaceAndPath(modID, snakeTestName),
+            Identifier.fromNamespaceAndPath(modID, snakeTestName),
             structureLocation,
-            ResourceLocation.parse(batch),
+            Identifier.parse(batch),
             100,
             1,
             wrapped
@@ -84,9 +84,9 @@ public record TestFunction
     }
 
     public static TestFunction createRaw(
-        ResourceLocation name,
-        ResourceLocation structureName,
-        ResourceLocation environmentName,
+        Identifier name,
+        Identifier structureName,
+        Identifier environmentName,
         int maxTicks,
         int setupTicks,
         Consumer<GameTestHelper> test

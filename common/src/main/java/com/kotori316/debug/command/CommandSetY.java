@@ -11,11 +11,11 @@ import net.minecraft.network.chat.Component;
 public class CommandSetY {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         var command = Commands.literal("setY")
-            .requires(source -> source.hasPermission(Commands.LEVEL_GAMEMASTERS))
+            .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
             .then(Commands.argument("y", IntegerArgumentType.integer())
                 .executes(s -> moveEntity(s.getSource(), IntegerArgumentType.getInteger(s, "y"))));
         var setY = dispatcher.register(command);
-        dispatcher.register(Commands.literal("y").requires(s -> s.hasPermission(Commands.LEVEL_GAMEMASTERS)).redirect(setY));
+        dispatcher.register(Commands.literal("y").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS)).redirect(setY));
     }
 
     private static int moveEntity(CommandSourceStack stack, int y) throws CommandSyntaxException {

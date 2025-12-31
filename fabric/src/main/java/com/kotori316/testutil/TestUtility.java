@@ -41,8 +41,8 @@ public class TestUtility implements ModInitializer {
         var testEnvironmentDefinitionRegistry = (Registry<TestEnvironmentDefinition>) registryMap.get(Registries.TEST_ENVIRONMENT);
 
         var environmentMap = TestFunctionRegister.testEnvironments(r -> Registry.registerForHolder(testEnvironmentDefinitionRegistry, r, new TestEnvironmentDefinition.AllOf()));
-        TestFunctionRegister.forEach((resourceLocation, testFunction) ->
-            Registry.register(testInstances, resourceLocation, testFunction.createTestInstance(environmentMap.get(testFunction.environmentName())))
+        TestFunctionRegister.forEach((Identifier, testFunction) ->
+            Registry.register(testInstances, Identifier, testFunction.createTestInstance(environmentMap.get(testFunction.environmentName())))
         );
     }
 }

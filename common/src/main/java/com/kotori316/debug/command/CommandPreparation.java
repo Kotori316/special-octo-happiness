@@ -12,7 +12,7 @@ public class CommandPreparation {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         var command =
             Commands.literal("du-preparation")
-                .requires(source -> source.hasPermission(2))
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .executes(c -> {
                     @Nullable ServerPlayer p = c.getSource().getEntity() instanceof ServerPlayer player ? player : null;
                     ServerSetting.onLogin(c.getSource().getServer(), p, true);

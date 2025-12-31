@@ -12,7 +12,7 @@ public class CommandKillItems {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         var command =
             Commands.literal("killItems")
-                .requires(source -> source.hasPermission(2))
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .executes(c -> {
                     var world = c.getSource().getLevel();
                     var entities = world.getEntities(EntityType.ITEM, EntitySelector.ENTITY_STILL_ALIVE);
