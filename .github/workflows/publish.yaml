@@ -70,7 +70,7 @@ jobs:
           RELEASE_DEBUG: ${{ inputs.RELEASE_DEBUG }}
           MAVEN_USERNAME: ${{steps.get-secrets.outputs.repolisite-publisher-name}}
           MAVEN_PASSWORD: ${{steps.get-secrets.outputs.repolisite-publisher-password}}
-      - run: ll ~/.m2 || true
+      - run: ls -al ~/.m2 || true
       - name: Upload Local Maven
         if: ${{ !cancelled() && !inputs.RELEASE_DEBUG }}
         uses: actions/upload-artifact@v6
