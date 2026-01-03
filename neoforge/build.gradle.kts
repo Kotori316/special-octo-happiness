@@ -43,6 +43,16 @@ dependencies {
 tasks.processResources {
     from(commonProject.sourceSets.main.get().resources)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    filesMatching("META-INF/neoforge.mods.toml") {
+        filter { line: String ->
+            if (line.trim().startsWith("[[mixins]]") || line.trim().startsWith("config =")) {
+                "#$line"
+            } else {
+                line
+            }
+        }
+    }
 }
 
 tasks.named("compileJava", JavaCompile::class).configure {
@@ -64,5 +74,14 @@ val jarAttributeMap = mapOf(
 tasks.jar {
     manifest {
         attributes(jarAttributeMap)
+    }
+    filesMatching("META-INF/neoforge.mods.toml") {
+        filter { line: String ->
+            if (line.trim().startsWith("#[[mixins]]") || line.trim().startsWith("#config =")) {
+                line.replaceFirst("#", "")
+            } else {
+                line
+            }
+        }
     }
 }
