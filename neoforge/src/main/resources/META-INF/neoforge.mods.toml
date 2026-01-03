@@ -10,6 +10,10 @@ authors = "Love, Cheese and small house plants"
 description = '''
 Test Utility
 '''
+
+[[mixins]]
+config = "debug_utility.mixins.json"
+
 [[dependencies.debug_utils]]
 modId = "neoforge"
 type = "required"
