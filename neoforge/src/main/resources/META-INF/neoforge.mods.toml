@@ -11,8 +11,7 @@ description = '''
 Test Utility
 '''
 
-[[mixins]]
-config = "debug_utility.mixins.json"
+mixins.config = "debug_utility.mixins.json"
 
 [[dependencies.debug_utils]]
 modId = "neoforge"

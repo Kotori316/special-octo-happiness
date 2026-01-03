@@ -46,7 +46,7 @@ tasks.processResources {
 
     filesMatching("META-INF/neoforge.mods.toml") {
         filter { line: String ->
-            if (line.trim().startsWith("[[mixins]]") || line.trim().startsWith("config =")) {
+            if (line.trim().startsWith("mixins.config")) {
                 "#$line"
             } else {
                 line
@@ -77,7 +77,7 @@ tasks.jar {
     }
     filesMatching("META-INF/neoforge.mods.toml") {
         filter { line: String ->
-            if (line.trim().startsWith("#[[mixins]]") || line.trim().startsWith("#config =")) {
+            if (line.trim().startsWith("#mixins.config")) {
                 line.replaceFirst("#", "")
             } else {
                 line
