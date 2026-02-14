@@ -6,8 +6,6 @@ plugins {
     id("com.kotori316.common.publish")
     // id("com.kotori316.common.signing")
     alias(libs.plugins.forge.gradle)
-    id("org.parchmentmc.librarian.forgegradle") version ("1.+")
-    id("org.spongepowered.mixin") version ("0.7.38")
 }
 
 val modId = "debug_util"
@@ -41,7 +39,7 @@ minecraft {
 }
 
 repositories {
-    maven(minecraft.mavenizer)
+    minecraft.mavenizer(this)
     maven(fg.forgeMaven)
     maven(fg.minecraftLibsMaven)
 }
