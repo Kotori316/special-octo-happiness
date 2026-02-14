@@ -5,7 +5,7 @@ plugins {
     id("com.kotori316.common.java")
     id("com.kotori316.common.publish")
     // id("com.kotori316.common.signing")
-    id("net.minecraftforge.gradle") version ("[6.0,6.2)")
+    alias(libs.plugins.forge.gradle)
     id("org.parchmentmc.librarian.forgegradle") version ("1.+")
     id("org.spongepowered.mixin") version ("0.7.38")
 }
@@ -21,8 +21,7 @@ minecraft {
             "version" to mappingVersion,
         )
     )
-    reobf = false
-    runs {
+    /*runs {
         create("client") {
             workingDirectory(project.file("run"))
             property("forge.logging.markers", "REGISTRIES")
@@ -38,13 +37,19 @@ minecraft {
                 }
             }
         }
-    }
+    }*/
+}
+
+repositories {
+    maven(minecraft.mavenizer)
+    maven(fg.forgeMaven)
+    maven(fg.minecraftLibsMaven)
 }
 
 val commonProject = project.project(":common")
 
 dependencies {
-    minecraft("net.minecraftforge:forge:${project.property("forge_version")}")
+    implementation(minecraft.dependency("net.minecraftforge:forge:${project.property("forge_version")}"))
     compileOnly(commonProject)
 }
 
@@ -75,11 +80,10 @@ tasks.jar {
     }
 }
 
-
-sourceSets.main {
-    val dir = layout.buildDirectory.dir("sourcesSets/$name")
-    output.setResourcesDir(dir)
-    java.destinationDirectory = dir
+sourceSets.forEach {
+    val dir = layout.buildDirectory.dir("sourcesSets/${it.name}")
+    it.output.setResourcesDir(dir)
+    it.java.destinationDirectory = dir
 }
 
 idea {
