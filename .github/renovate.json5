@@ -8,14 +8,5 @@
     "$default"
   ],
   "packageRules": [
-    {
-      "matchManagers": [
-        "gradle"
-      ],
-      "matchPackagePatterns": [
-        "^net.neoforged.gradle.userdev"
-      ],
-      "enabled": false
-    }
   ]
 }
