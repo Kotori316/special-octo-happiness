@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.nio.file.Path;
 
 @Mixin(targets = "net.minecraft.data.HashCache$CacheUpdater")
-public final class MixinHashCache {
+public final class MixinHashCacheUpdater {
     @Inject(method = "writeIfNeeded", at = @At("HEAD"))
     private void outputPath(Path path, byte[] data, HashCode hashCode, CallbackInfo ci) {
         TestUtilityCommon.logDataGeneration(path, hashCode);
