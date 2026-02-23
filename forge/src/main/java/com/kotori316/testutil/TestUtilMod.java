@@ -8,11 +8,14 @@ import net.minecraft.core.RegistrationInfo;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTestInstance;
 import net.minecraft.gametest.framework.GameTestServer;
+import net.minecraft.gametest.framework.StructureUtils;
 import net.minecraft.gametest.framework.TestEnvironmentDefinition;
 import net.minecraft.resources.ResourceKey;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegisterEvent;
+
+import java.nio.file.Path;
 
 public final class TestUtilMod {
 
@@ -24,6 +27,7 @@ public final class TestUtilMod {
     static void changeReporter() {
         ReporterRegister.changeReporter();
         TestUtilityCommon.GENERAL.info("Inject CreateFileReporter by {}", TestUtilityCommon.MOD_ID);
+        StructureUtils.testStructuresDir = Path.of("gameteststructures");
     }
 
     static void registerTestFunctions(RegisterEvent event) {
