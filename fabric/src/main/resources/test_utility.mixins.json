@@ -1,15 +1,16 @@
 {
-	"required": true,
-	"package": "com.kotori316.testutil.mixin",
-	"compatibilityLevel": "JAVA_17",
-	"minVersion": "0.8",
-	"mixins": [
-		"FabricGameTestHelperMixin",
-		"MixinDistanceManager",
-		"RegistryDataLoaderMixin",
-		"StructureTemplateManagerMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+  "required": true,
+  "package": "com.kotori316.testutil.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": [
+    "FabricGameTestHelperMixin",
+    "MixinDistanceManager",
+    "MixinHashCache",
+    "RegistryDataLoaderMixin",
+    "StructureTemplateManagerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }
