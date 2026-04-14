@@ -5,8 +5,10 @@
   ],
   "baseBranches": [
     "1.21",
+    "1.21.11",
     "$default"
   ],
+  "minimumReleaseAge": "3 days",
   "packageRules": [
   ]
 }
