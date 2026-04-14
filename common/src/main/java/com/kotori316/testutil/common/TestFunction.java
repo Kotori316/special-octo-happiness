@@ -94,15 +94,15 @@ public record TestFunction
         return new TestFunction(name, structureName, environmentName, maxTicks, setupTicks, test);
     }
 
-    public TestData<Holder<TestEnvironmentDefinition>> createTestData(Holder<TestEnvironmentDefinition> definition) {
+    public TestData<Holder<TestEnvironmentDefinition<?>>> createTestData(Holder<TestEnvironmentDefinition<?>> definition) {
         return new TestData<>(definition, structureName, maxTicks, setupTicks, true);
     }
 
-    public GameTestInstance createTestInstance(Holder<TestEnvironmentDefinition> definition) {
+    public GameTestInstance createTestInstance(Holder<TestEnvironmentDefinition<?>> definition) {
         return this.createTestInstance(createTestData(definition));
     }
 
-    public GameTestInstance createTestInstance(TestData<Holder<TestEnvironmentDefinition>> testData) {
+    public GameTestInstance createTestInstance(TestData<Holder<TestEnvironmentDefinition<?>>> testData) {
         var functionKey = ResourceKey.create(Registries.TEST_FUNCTION, this.name);
         return new FunctionGameTestInstance(functionKey, testData);
     }

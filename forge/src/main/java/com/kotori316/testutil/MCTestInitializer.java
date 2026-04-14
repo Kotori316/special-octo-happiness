@@ -5,8 +5,8 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.Bootstrap;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.material.Fluid;
@@ -76,7 +76,6 @@ public final class MCTestInitializer implements BeforeAllCallback {
         });
     }
 
-    @SuppressWarnings("removal") // Intended
     public static synchronized void setUp(String modId, Runnable additional, Consumer<RegisterEvent> modResourceRegister) {
         if (!INITIALIZED.getAndSet(true)) {
             resolveInfoCmpError();
@@ -85,7 +84,7 @@ public final class MCTestInitializer implements BeforeAllCallback {
             setHandler();
             Bootstrap.bootStrap();
             unfreezeGameData();
-            ModLoadingContext.get().setActiveContainer(new DummyModContainer(modId));
+            setActiveContainer(modId);
             mockCapability();
             mockRegistries();
             setFluidType();
@@ -128,7 +127,7 @@ public final class MCTestInitializer implements BeforeAllCallback {
             handler.set(null, launchHandlerConstructor.newInstance());
 
             try (MockedConstruction<ModLoader> ignore = mockConstruction(ModLoader.class)) {
-                var ignored = ModLoader.get();
+                var ignored = ModLoader.isDataGenRunning();
             }
         } catch (Exception e) {
             fail(e);
@@ -141,6 +140,18 @@ public final class MCTestInitializer implements BeforeAllCallback {
     @SuppressWarnings({"deprecation", "UnstableApiUsage"})
     private static void unfreezeGameData() {
         BuiltInRegistries.REGISTRY.stream().filter(r -> r instanceof MappedRegistry).forEach(r -> ((MappedRegistry<?>) r).unfreeze());
+    }
+
+    @SuppressWarnings("removal") // Intended
+    private static void setActiveContainer(String modId) {
+        var context = ModLoadingContext.get();
+        try {
+            var field = ModLoadingContext.class.getDeclaredMethod("setActiveContainer", ModContainer.class);
+            field.setAccessible(true);
+            field.invoke(context, new DummyModContainer(modId));
+        } catch (ReflectiveOperationException e) {
+            throw new AssertionError(e);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -182,7 +193,7 @@ public final class MCTestInitializer implements BeforeAllCallback {
         }
     }
 
-    @SuppressWarnings({"unchecked", "deprecation", "UnstableApiUsage"})
+    @SuppressWarnings({"unchecked", "deprecation", "UnstableApiUsage", "removal"})
     private static <T> void mockRegistry(IForgeRegistry<T> registry, Field field) throws ReflectiveOperationException {
         var wrapperGetter = ForgeRegistry.class.getDeclaredMethod("getWrapper");
         wrapperGetter.setAccessible(true);

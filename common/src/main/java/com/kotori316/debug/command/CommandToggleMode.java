@@ -19,10 +19,10 @@ public class CommandToggleMode {
                     if (player.isCreative()) {
                         player.setGameMode(GameType.SURVIVAL);
                         player.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 100, 5));
-                        player.displayClientMessage(Component.literal("Changed to Survival"), false);
+                        player.sendSystemMessage(Component.literal("Changed to Survival"), false);
                     } else {
                         player.setGameMode(GameType.CREATIVE);
-                        player.displayClientMessage(Component.literal("Changed to Creative"), false);
+                        player.sendSystemMessage(Component.literal("Changed to Creative"), false);
                     }
                     return Command.SINGLE_SUCCESS;
                 });

@@ -39,7 +39,7 @@ public final class TestUtilMod {
         public void accept(RegisterGameTestsEvent registerGameTestsEvent) {
             ReporterRegister.changeReporter();
             TestUtilityCommon.GENERAL.info("Inject CreateFileReporter by {}", TestUtilityCommon.MOD_ID);
-            StructureUtils.testStructuresDir = Path.of("gameteststructures");
+            StructureUtils.testStructuresSourceDir = Path.of("gameteststructures");
         }
     }
 

@@ -55,7 +55,7 @@ public final class TestFunctionRegister {
         Registry.register(BuiltInRegistries.TEST_FUNCTION, Identifier, test);
     }
 
-    public static synchronized Map<Identifier, Holder<TestEnvironmentDefinition>> testEnvironments(Function<Identifier, Holder<TestEnvironmentDefinition>> registerFunction) {
+    public static synchronized Map<Identifier, Holder<TestEnvironmentDefinition<?>>> testEnvironments(Function<Identifier, Holder<TestEnvironmentDefinition<?>>> registerFunction) {
         TestUtilityCommon.TEST_LOADER_LOGGER.info("Registering test environments");
         return TEST_FUNCTIONS.values().stream()
             .map(TestFunction::environmentName)

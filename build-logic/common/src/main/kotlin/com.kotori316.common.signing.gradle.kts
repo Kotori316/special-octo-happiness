@@ -1,15 +1,15 @@
 plugins {
+    java
     id("maven-publish")
     id("signing")
 }
 
+java {
+    withSourcesJar()
+}
+
 signing {
     sign(publishing.publications)
-    listOf("jar", "deobfJar", "remapJar", "sourcesJar").forEach { name ->
-        tasks.findByName(name)?.let {
-            sign(it)
-        }
-    }
 }
 
 // sign task creation is in `com.kotori316.jars.gradle.kts`
@@ -29,44 +29,19 @@ afterEvaluate {
     }
 }
 
-abstract class JarSignTask : DefaultTask() {
-    @get:Input
-    abstract val jarTask: Property<org.gradle.jvm.tasks.Jar>
-
-    init {
-        val canJarSign: Boolean = project.hasProperty("jarSign.keyAlias") &&
-                project.hasProperty("jarSign.keyLocation") &&
-                project.hasProperty("jarSign.storePass")
-        onlyIf("runs only with jar sign keys") { canJarSign }
-    }
-
-    @TaskAction
-    fun sign() {
-        ant.withGroovyBuilder {
-            "signjar"(
-                "jar" to jarTask.get().archiveFile.get(),
-                "alias" to project.findProperty("jarSign.keyAlias"),
-                "keystore" to project.findProperty("jarSign.keyLocation"),
-                "storepass" to project.findProperty("jarSign.storePass"),
-                "sigalg" to "Ed25519",
-                "digestalg" to "SHA-256",
-                "tsaurl" to "http://timestamp.digicert.com",
-            )
-        }
-    }
-}
-
 tasks {
-    listOf("jar", "deobfJar", "remapJar", "sourcesJar").forEach { name ->
-        findByName(name)?.let { task ->
-            val signTask = register(
-                "jksSign" + name
-                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                JarSignTask::class,
-            ) {
-                jarTask = task as org.gradle.jvm.tasks.Jar
-            }
-            task.finalizedBy(signTask)
+    val signTask = register("jksSignJar", JarSignTask::class) {
+        onlyIf {
+            project.hasProperty("jarSign.keyAlias") &&
+                    project.hasProperty("jarSign.keyLocation") &&
+                    project.hasProperty("jarSign.storePass")
         }
+        jarFile = jar.flatMap { it.archiveFile }
+        keyAlias = project.findProperty("jarSign.keyAlias") as? String ?: ""
+        keyStore = project.findProperty("jarSign.keyLocation") as? String ?: ""
+        storePass = project.findProperty("jarSign.storePass") as? String ?: ""
+    }
+    jar {
+        finalizedBy(signTask)
     }
 }

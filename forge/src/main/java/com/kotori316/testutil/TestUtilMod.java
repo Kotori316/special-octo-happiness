@@ -27,7 +27,7 @@ public final class TestUtilMod {
     static void changeReporter() {
         ReporterRegister.changeReporter();
         TestUtilityCommon.GENERAL.info("Inject CreateFileReporter by {}", TestUtilityCommon.MOD_ID);
-        StructureUtils.testStructuresDir = Path.of("gameteststructures");
+        StructureUtils.testStructuresSourceDir = Path.of("gameteststructures");
     }
 
     static void registerTestFunctions(RegisterEvent event) {
@@ -44,7 +44,7 @@ public final class TestUtilMod {
         }
         changeReporter();
 
-        var environments = (MappedRegistry<TestEnvironmentDefinition>) server.registryAccess().lookupOrThrow(Registries.TEST_ENVIRONMENT);
+        var environments = (MappedRegistry<TestEnvironmentDefinition<?>>) server.registryAccess().lookupOrThrow(Registries.TEST_ENVIRONMENT);
         var tests = (MappedRegistry<GameTestInstance>) server.registryAccess().lookupOrThrow(Registries.TEST_INSTANCE);
         environments.unfreeze();
         tests.unfreeze();

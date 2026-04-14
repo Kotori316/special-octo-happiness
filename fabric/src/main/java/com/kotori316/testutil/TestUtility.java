@@ -38,7 +38,7 @@ public class TestUtility implements ModInitializer {
             throw new RuntimeException(e);
         }
         var testInstances = (Registry<GameTestInstance>) registryMap.get(Registries.TEST_INSTANCE);
-        var testEnvironmentDefinitionRegistry = (Registry<TestEnvironmentDefinition>) registryMap.get(Registries.TEST_ENVIRONMENT);
+        var testEnvironmentDefinitionRegistry = (Registry<TestEnvironmentDefinition<?>>) registryMap.get(Registries.TEST_ENVIRONMENT);
 
         var environmentMap = TestFunctionRegister.testEnvironments(r -> Registry.registerForHolder(testEnvironmentDefinitionRegistry, r, new TestEnvironmentDefinition.AllOf()));
         TestFunctionRegister.forEach((Identifier, testFunction) ->

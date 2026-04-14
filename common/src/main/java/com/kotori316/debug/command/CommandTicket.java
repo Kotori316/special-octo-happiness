@@ -28,7 +28,7 @@ public final class CommandTicket {
     private static int checkTicket(CommandContext<CommandSourceStack> commandContext, BlockPos pos) {
         var data = commandContext.getSource();
         var distanceManager = data.getLevel().getChunkSource().chunkMap.getDistanceManager();
-        var chunkPos = new ChunkPos(pos);
+        var chunkPos = ChunkPos.containing(pos);
         var tickets = TicketListProvider.getTicketForPos(distanceManager, chunkPos);
         var message = Component.literal("Tickets for chunk %s(%s) is %s".formatted(chunkPos, pos.toShortString(), tickets.size()))
             .append(Component.literal(System.lineSeparator()))

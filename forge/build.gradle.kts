@@ -6,19 +6,12 @@ plugins {
     id("com.kotori316.common.publish")
     // id("com.kotori316.common.signing")
     alias(libs.plugins.forge.gradle)
-    // id("org.parchmentmc.librarian.forgegradle") version ("1.+")
     // id("org.spongepowered.mixin") version ("0.7.38")
 }
 
 val modId = "debug_util"
 
 minecraft {
-    mappings(
-        mapOf(
-            "channel" to "official",
-            "version" to "${project.property("minecraft")}",
-        )
-    )
     /*runs {
         create("client") {
             workingDirectory(project.file("run"))
@@ -75,18 +68,5 @@ val jarAttributeMap = mapOf(
 tasks.jar {
     manifest {
         attributes(jarAttributeMap)
-    }
-}
-
-sourceSets.forEach {
-    val dir = layout.buildDirectory.dir("sourcesSets/${it.name}")
-    it.output.setResourcesDir(dir)
-    it.java.destinationDirectory = dir
-}
-
-idea {
-    module {
-        isDownloadSources = true
-        isDownloadJavadoc = true
     }
 }

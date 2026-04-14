@@ -36,7 +36,7 @@ public class CommandGive2 {
 
     private static void give(Collection<ServerPlayer> players, ItemInput item, int count) throws CommandSyntaxException {
         for (ServerPlayer player : players) {
-            var stack = item.createItemStack(count, false);
+            var stack = item.createItemStack(count);
             var slot = player.getInventory().getFreeSlot();
             if (slot >= 0) {
                 player.getInventory().setItem(slot, stack);

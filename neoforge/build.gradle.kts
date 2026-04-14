@@ -27,10 +27,6 @@ runs {
 }
 
 subsystems {
-    parchment {
-        minecraftVersion = project.property("parchment_minecraft") as String
-        mappingsVersion = project.property("parchment_mapping") as String
-    }
 }
 
 val commonProject = project.project(":common")

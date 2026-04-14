@@ -3,6 +3,7 @@ package com.kotori316.debug;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.clock.ClockTimeMarkers;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
@@ -12,6 +13,7 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gamerules.GameRules;
+import net.minecraft.world.timeline.Timelines;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
@@ -30,8 +32,8 @@ public class ServerSetting {
         gameRule.set(GameRules.SPAWN_WARDENS, false, server);
 
         server.getAllLevels().forEach(s -> {
-            s.setWeatherParameters(0, 0, false, false);
-            s.setDayTime(6000L);
+            s.getServer().setWeatherParameters(0, 0, false, false);
+            s.dimensionType().defaultClock().ifPresent(c -> s.clockManager().moveToTimeMarker(c, ClockTimeMarkers.NOON));
         });
 
         if (player != null) {
@@ -39,7 +41,7 @@ public class ServerSetting {
                     "Set game rules for debugging.",
                     "Seed = %s".formatted(server.overworld().getSeed())
                 ).map(Component::literal)
-                .forEach(m -> player.displayClientMessage(m, false));
+                .forEach(player::sendSystemMessage);
             var potionStack = new ItemStack(Items.SPLASH_POTION);
             potionStack.set(DataComponents.POTION_CONTENTS,
                 new PotionContents(Potions.LONG_NIGHT_VISION).withEffectAdded(new MobEffectInstance(MobEffects.WATER_BREATHING, 20 * 60 * 8))

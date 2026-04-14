@@ -6,7 +6,7 @@ plugins {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(25)
     }
     withSourcesJar()
 }
@@ -49,8 +49,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-    implementation("net.sf.jopt-simple:jopt-simple:5.0.4") { version { strictly("5.0.4") } }
-
     implementation(platform("org.junit:junit-bom:${project.property("jupiter")}"))
     implementation("org.junit.jupiter:junit-jupiter")
     implementation("org.mockito:mockito-core:${project.property("mockito_core")}") {
@@ -78,3 +76,10 @@ dependencies {
 val mc: String = project.property("minecraft").toString()
 val generalDescription = "special-octo-happiness(${project.version}) for Minecraft $mc with ${project.name}"
 ext.set("generalDescription", generalDescription)
+
+idea {
+    module {
+        isDownloadSources = true
+        isDownloadJavadoc = true
+    }
+}

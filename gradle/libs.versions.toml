@@ -2,7 +2,7 @@
 gradle_cf = "3.5"
 gradle_forge = "7.0.20"
 gradle_neoforge = "7.1.21"
-gradle_vanilla = "0.2.2"
+gradle_vanilla = "0.3.2"
 gradle_loom = "1.16.1"
 
 [plugins]
@@ -10,4 +10,4 @@ cf = { id = "com.kotori316.plugin.cf", version.ref = "gradle_cf" }
 forge-gradle = { id = "net.minecraftforge.gradle", version.ref = "gradle_forge" }
 neoforge-gradle = { id = "net.neoforged.gradle.userdev", version.ref = "gradle_neoforge" }
 spongepowered-vanilla = { id = "org.spongepowered.gradle.vanilla", version.ref = "gradle_vanilla" }
-fabric-loom = { id = "fabric-loom", version.ref = "gradle_loom" }
+fabric-loom = { id = "net.fabricmc.fabric-loom", version.ref = "gradle_loom" }

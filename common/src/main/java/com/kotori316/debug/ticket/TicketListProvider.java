@@ -15,6 +15,6 @@ public interface TicketListProvider {
     }
 
     static List<Ticket> getTicketForPos(DistanceManager manager, ChunkPos pos) {
-        return getTicket(manager).getTickets(pos.toLong());
+        return getTicket(manager).getTickets(pos.pack());
     }
 }

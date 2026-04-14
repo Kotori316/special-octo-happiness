@@ -31,12 +31,8 @@ val commonProject = project.findProject(":common")
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft("com.mojang:minecraft:${project.property("minecraft")}")
-    mappings(loom.layered {
-        officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${project.property("parchment_minecraft")}:${project.property("parchment_mapping")}@zip")
-    })
-    modImplementation("net.fabricmc:fabric-loader:${project.property("fabric_loader")}")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
+    implementation("net.fabricmc:fabric-loader:${project.property("fabric_loader")}")
+    implementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
 
     commonProject?.let { compileOnly(it) }
 }
@@ -65,7 +61,6 @@ tasks.named("compileJava", JavaCompile::class) {
 
 afterEvaluate {
     println(tasks.jar.get().archiveFile.get())
-    println(tasks.remapJar.get().archiveFile.get())
     println(publishing.publications)
     println(components["java"])
 }
