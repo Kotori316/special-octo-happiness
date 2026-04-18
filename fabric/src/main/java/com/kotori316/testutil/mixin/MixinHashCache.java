@@ -19,8 +19,8 @@ public final class MixinHashCache {
     @Shadow
     private Path rootDir;
 
-    @Inject(method = "purgeStaleAndWrite", at = @At(value = "INVOKE", target = "Ljava/util/Set;add(Ljava/lang/Object;)Z", shift = At.Shift.AFTER))
-    private void addMetaInfToIgnoreSet(CallbackInfo ci, @Local(ordinal = 0) Set<Path> set) {
-        HashCacheIgnore.addMetaInfToIgnoreSet(rootDir, set);
+    @Inject(method = "purgeStaleAndWrite", at = @At(value = "INVOKE", target = "Ljava/util/Map;forEach(Ljava/util/function/BiConsumer;)V", shift = At.Shift.AFTER))
+    private void addMetaInfToIgnoreSet(CallbackInfo ci, @Local(name = "allowedFiles") Set<Path> allowedFiles) {
+        HashCacheIgnore.addMetaInfToIgnoreSet(rootDir, allowedFiles);
     }
 }

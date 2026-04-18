@@ -7,8 +7,7 @@
     "FabricGameTestHelperMixin",
     "MixinDistanceManager",
     "MixinHashCache",
-    "RegistryDataLoaderMixin",
-    "StructureTemplateManagerMixin"
+    "RegistryDataLoaderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

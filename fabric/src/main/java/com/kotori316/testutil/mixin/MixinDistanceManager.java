@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Shadow;
 public abstract class MixinDistanceManager implements TicketListProvider {
     @Shadow
     @Final
-    TicketStorage ticketStorage;
+    private TicketStorage ticketStorage;
 
     @Override
     public TicketStorage test_utility_getTicket() {
