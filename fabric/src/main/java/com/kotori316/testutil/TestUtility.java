@@ -8,6 +8,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTestInstance;
 import net.minecraft.gametest.framework.TestEnvironmentDefinition;
+import net.minecraft.resources.RegistryLoadTask;
 import net.minecraft.resources.ResourceKey;
 
 import java.util.HashMap;
@@ -22,20 +23,19 @@ public class TestUtility implements ModInitializer {
     }
 
     @SuppressWarnings("unchecked")
-    public static void registerTest(List<?> registries) {
+    public static void registerTest(List<RegistryLoadTask<?>> registries) {
         TestUtilityCommon.GENERAL.info("Registering test");
         Map<ResourceKey<? extends Registry<?>>, Registry<?>> registryMap = new HashMap<>();
-        try {
-            var clazz = Class.forName("net.minecraft.resources.RegistryDataLoader$Loader");
-            var method = clazz.getDeclaredMethod("registry");
-            method.setAccessible(true);
-            for (Object loader : registries) {
-                var r = (Registry<?>) method.invoke(loader);
-                registryMap.put(r.key(), r);
+        for (RegistryLoadTask<?> entry : registries) {
+            try {
+                var field = RegistryLoadTask.class.getDeclaredField("registry");
+                field.setAccessible(true);
+                Registry<?> registry = (Registry<?>) field.get(entry);
+                registryMap.put(registry.key(), registry);
+            } catch (ReflectiveOperationException e) {
+                TestUtilityCommon.GENERAL.error("Failed to register test", e);
+                throw new RuntimeException(e);
             }
-        } catch (ReflectiveOperationException e) {
-            TestUtilityCommon.GENERAL.error("Failed to register test", e);
-            throw new RuntimeException(e);
         }
         var testInstances = (Registry<GameTestInstance>) registryMap.get(Registries.TEST_INSTANCE);
         var testEnvironmentDefinitionRegistry = (Registry<TestEnvironmentDefinition<?>>) registryMap.get(Registries.TEST_ENVIRONMENT);
