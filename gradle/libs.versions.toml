@@ -1,6 +1,6 @@
 [versions]
 gradle_cf = "3.5"
-gradle_forge = "7.0.23"
+gradle_forge = "7.0.24"
 gradle_neoforge = "7.1.25"
 gradle_vanilla = "0.2.2"
 gradle_loom = "1.16.1"
