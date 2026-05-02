@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.nio.file.Path;
-import java.util.HashSet;
+import java.util.Set;
 
 @Mixin(HashCache.class)
 public final class MixinHashCache {
@@ -20,7 +20,7 @@ public final class MixinHashCache {
     private Path rootDir;
 
     @Inject(method = "purgeStaleAndWrite", at = @At(value = "INVOKE", target = "Ljava/util/Set;add(Ljava/lang/Object;)Z", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void addMetaInfToIgnoreSet(CallbackInfo ci, HashSet<Path> set) {
+    private void addMetaInfToIgnoreSet(CallbackInfo ci, Set<Path> set) {
         HashCacheIgnore.addMetaInfToIgnoreSet(rootDir, set);
     }
 }
