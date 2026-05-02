@@ -16,5 +16,5 @@ repositories {
 }
 
 dependencies {
-    compileOnly("net.fabricmc:sponge-mixin:0.17.1+mixin.0.8.7")
+    compileOnly("net.fabricmc:sponge-mixin:0.17.3+mixin.0.8.7")
 }
