@@ -3,7 +3,7 @@ gradle_cf = "3.5"
 gradle_forge = "7.0.25"
 gradle_neoforge = "7.1.36"
 gradle_vanilla = "0.3.2"
-gradle_loom = "1.17.7"
+gradle_loom = "1.17.8"
 
 [plugins]
 cf = { id = "com.kotori316.plugin.cf", version.ref = "gradle_cf" }
