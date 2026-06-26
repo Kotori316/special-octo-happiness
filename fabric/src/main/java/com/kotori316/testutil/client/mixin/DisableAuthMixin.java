@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class DisableAuthMixin {
 
     @Inject(method = "createUserApiService", at = @At("HEAD"), cancellable = true)
-    private void bypassAuth(YggdrasilAuthenticationService yggdrasilAuthenticationService, GameConfig gameConfig, CallbackInfoReturnable<UserApiService> cir) {
+    private static void bypassAuth(YggdrasilAuthenticationService yggdrasilAuthenticationService, GameConfig gameConfig, CallbackInfoReturnable<UserApiService> cir) {
         TestUtilityCommon.GENERAL.info("Bypass Minecraft auth by {}", TestUtilityCommon.MOD_ID);
         cir.setReturnValue(UserApiService.OFFLINE);
     }
