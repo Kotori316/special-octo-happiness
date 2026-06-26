@@ -12,7 +12,7 @@
   "minimumReleaseAge": "3 days",
   "packageRules": [
     {
-      "matchPackageNames": ["org.spongepowered.gradle.vanilla"],
+      "matchDepNames": ["/^org.spongepowered.gradle.vanilla/"],
       "matchUpdateTypes": ["major", "minor"],
       "enabled": false
     }
