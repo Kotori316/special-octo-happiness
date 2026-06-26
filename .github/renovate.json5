@@ -6,9 +6,15 @@
   "baseBranches": [
     "1.21",
     "1.21.11",
+    "26.1",
     "$default"
   ],
   "minimumReleaseAge": "3 days",
   "packageRules": [
+    {
+      "matchPackageNames": ["org.spongepowered.gradle.vanilla"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    }
   ]
 }
