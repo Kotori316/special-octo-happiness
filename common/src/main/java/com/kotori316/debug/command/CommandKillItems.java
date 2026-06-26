@@ -6,7 +6,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 
 public class CommandKillItems {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -15,7 +15,7 @@ public class CommandKillItems {
                 .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .executes(c -> {
                     var world = c.getSource().getLevel();
-                    var entities = world.getEntities(EntityType.ITEM, EntitySelector.ENTITY_STILL_ALIVE);
+                    var entities = world.getEntities(EntityTypes.ITEM, EntitySelector.ENTITY_STILL_ALIVE);
                     entities.forEach(e -> e.kill(world));
                     c.getSource().sendSuccess(() -> Component.translatable("commands.kill.success.multiple", entities.size()), true);
                     return Command.SINGLE_SUCCESS;
