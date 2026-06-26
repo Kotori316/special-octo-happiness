@@ -13,7 +13,7 @@
   "packageRules": [
     {
       "matchPackageNames": ["org.spongepowered.gradle.vanilla"],
-      "matchUpdateTypes": ["major"],
+      "matchUpdateTypes": ["major", "minor"],
       "enabled": false
     }
   ]
