@@ -16,6 +16,6 @@ mixins.config = "debug_utility.mixins.json"
 [[dependencies.debug_utils]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21, )"
+versionRange = "[26.3, )"
 ordering = "NONE"
 side = "BOTH"

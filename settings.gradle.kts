@@ -30,9 +30,10 @@ develocity {
 
 includeBuild("build-logic")
 include(":common")
-if (!System.getenv("DISABLE_FORGE").toBoolean()) {
-    include(":forge")
-}
+// Forge does not support 26.3 yet
+// if (!System.getenv("DISABLE_FORGE").toBoolean()) {
+//     include(":forge")
+// }
 if (!System.getenv("DISABLE_FABRIC").toBoolean()) {
     include(":fabric")
 }
