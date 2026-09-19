@@ -12,6 +12,6 @@ dependencies {
     mapOf(
         "com.kotori316.plugin.cf" to libs.versions.gradle.cf.get(),
     ).forEach { (name, version) ->
-        implementation(group = name, name = "${name}.gradle.plugin", version = version)
+        implementation("$name:$name.gradle.plugin:$version")
     }
 }

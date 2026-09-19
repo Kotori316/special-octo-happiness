@@ -15,14 +15,14 @@ loom {
     }
     runs {
         create("gameTestServer") {
-            configName = "GameTestServer"
+            displayName = "GameTestServer"
             server()
-            vmArgs(
+            jvmArguments.addAll(
                 "-ea",
                 "-Dfabric-api.gametest",
-                "-Dfabric-api.gametest.report-file=game_test/test-results/test/game_test.xml"
+                "-Dfabric-api.gametest.report-file=game_test/test-results/test/game_test.xml",
             )
-            runDir = "run-server"
+            runDirectory = file("run-server")
         }
     }
 }
