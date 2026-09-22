@@ -12,23 +12,27 @@ plugins {
 val modId = "debug_util"
 
 minecraft {
-    /*runs {
-        create("client") {
-            workingDirectory(project.file("run"))
-            property("forge.logging.markers", "REGISTRIES")
-            property("mixin.env.remapRefMap", "true")
-            property("mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg")
-            property("mixin.debug.export", "true")
-            property("forge.logging.console.level", "debug")
+    runs {
+        register("client") {
+            workingDir.convention(layout.projectDirectory.dir("run"))
+            systemProperty("forge.logging.markers", "REGISTRIES")
+            systemProperty("mixin.env.remapRefMap", "true")
+            systemProperty("mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg")
+            systemProperty("mixin.debug.export", "true")
+            systemProperty("forge.logging.console.level", "debug")
+            systemProperty("eventbus.api.strictRuntimeChecks", "true")
+            systemProperty("terminal.ansi", "true")
+            if (System.getProperty("os.name").startsWith("Mac")) {
+                jvmArgs("-XstartOnFirstThread")
+            }
             args("--username", "Kotori")
-
             mods {
                 create(modId) {
                     source(sourceSets["main"])
                 }
             }
         }
-    }*/
+    }
 }
 
 repositories {
@@ -69,4 +73,10 @@ tasks.jar {
     manifest {
         attributes(jarAttributeMap)
     }
+}
+
+sourceSets.forEach {
+    val dir = layout.buildDirectory.dir("sourcesSets/forge-${it.name}")
+    it.output.setResourcesDir(dir)
+    it.java.destinationDirectory = dir
 }
