@@ -28,6 +28,8 @@ public class ClientSetting {
             settings.getSoundSourceOptionInstance(SoundSource.MUSIC).set(0.125);
             settings.getSoundSourceOptionInstance(SoundSource.VOICE).set(0.125);
 
+            settings.save();
+
             DebugUtils.LOGGER.info("Set ClientSetting from {}", DebugUtils.MOD_ID);
         }
     }
