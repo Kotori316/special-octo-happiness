@@ -17,6 +17,7 @@ public class ClientSetting {
             settings.attackIndicator().set(AttackIndicatorStatus.HOTBAR);
             settings.cloudStatus().set(CloudStatus.OFF);
             settings.operatorItemsTab().set(true);
+            settings.quitShortcuts().set(false);
 
             settings.pauseOnLostFocus = false;
             settings.advancedItemTooltips = true;
