@@ -21,10 +21,12 @@ jobs:
         with:
           cache-read-only: true
       - run: ./gradlew testClasses
-      - run: ./gradlew test
+      - name: Test Forge and Fabric
+        run: ./gradlew test
         env:
           DISABLE_NEOFORGE: true
-      - run: ./gradlew testJunit
+      - name: Test NeoForge
+        run: ./gradlew testJunit
         env:
           DISABLE_FABRIC: true
           DISABLE_FORGE: true

@@ -72,7 +72,7 @@ public final class MCTestInitializer implements BeforeAllCallback {
     private static final AtomicBoolean INITIALIZED = new AtomicBoolean(false);
 
     public static void setUp(String modId, Runnable additional) {
-        setUp(modId, additional, e -> {
+        setUp(modId, additional, _ -> {
         });
     }
 
