@@ -31,7 +31,7 @@ subsystems {
 
 val commonProject = project.project(":common")
 dependencies {
-    implementation(group = "net.neoforged", name = "neoforge", version = project.property("neo_version").toString())
+    implementation("net.neoforged:neoforge:${project.property("neo_version")}")
 
     compileOnly(commonProject)
 }

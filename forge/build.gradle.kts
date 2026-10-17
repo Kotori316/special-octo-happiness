@@ -36,6 +36,7 @@ minecraft {
 }
 
 repositories {
+    mavenCentral()
     minecraft.mavenizer(this)
     maven(fg.forgeMaven)
     maven(fg.minecraftLibsMaven)
