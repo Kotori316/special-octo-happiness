@@ -13,7 +13,6 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.timeline.Timelines;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
@@ -44,7 +43,7 @@ public class ServerSetting {
                 .forEach(player::sendSystemMessage);
             var potionStack = new ItemStack(Items.SPLASH_POTION);
             potionStack.set(DataComponents.POTION_CONTENTS,
-                new PotionContents(Potions.LONG_NIGHT_VISION).withEffectAdded(new MobEffectInstance(MobEffects.WATER_BREATHING, 20 * 60 * 8))
+                new PotionContents(Potions.LONG_NIGHT_VISION).withEffectAdded(new MobEffectInstance(MobEffects.CONDUIT_POWER, 20 * 60 * 8))
             );
             if (!player.getInventory().contains(potionStack)) {
                 player.addItem(potionStack);
